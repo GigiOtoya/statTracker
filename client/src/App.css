@@ -16,6 +16,8 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-inline: 10px;
   color: white;
   background-color: #14161a;
   height: 60px;
@@ -25,6 +27,7 @@
   display: flex;
   background-color: #23272e;
   width: 60%;
+  padding: 10px;
 }
 
 .right {
@@ -40,7 +43,7 @@
 }
 
 .svg-container {
-  width: 500px;
+  width: 600px;
   padding: 10px;
 }
 
@@ -51,7 +54,6 @@
 .dropdown {
   display: flex;
   flex-direction: column;
-  padding: 10px;
 }
 
 .dropdown-main {
@@ -111,4 +113,23 @@
 
 .dropdown-item:hover {
   background-color: rgb(216, 216, 216);
+}
+
+.page-title {
+  font-size: 30px;
+}
+
+.auth {
+  font-size: 20px;
+}
+
+.row-header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #14161a;
+  color: white;
 }

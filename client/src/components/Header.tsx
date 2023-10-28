@@ -1,8 +1,8 @@
 export const Header = () => {
   return (
     <header className="header">
-      <span> PAGE TITLE </span>
-      <span> LOGIN </span>
+      <span className="page-title"> Squad Builder </span>
+      <span className="auth"> Login </span>
     </header>
   );
 };
