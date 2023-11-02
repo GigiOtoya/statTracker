@@ -1,4 +1,6 @@
-export const PlayerItem = () => {
+import { Player } from "../types/types";
+
+export const PlayerItem = (player: Player) => {
   return (
     <div className="player-item">
       <span className="player-number">

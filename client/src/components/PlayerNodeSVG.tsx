@@ -1,3 +1,9 @@
-type PlayerNodeProps = {};
+import { Player } from "../types/types";
 
-export const PlayerNodeSVG = (props: PlayerNodeProps) => {};
+export const PlayerNodeSVG = (player: Player) => {
+  return (
+    <circle>
+      <text> {player.number} </text>
+    </circle>
+  );
+};
