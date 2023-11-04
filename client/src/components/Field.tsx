@@ -1,6 +1,7 @@
 import { ReactComponent as FieldSVG } from "../assets/Field-min.svg";
 import { useState } from "react";
 import { Player } from "../types/types";
+import { DropDown } from "./DropDown";
 
 export const Field = () => {
   const [players, setPlayers] = useState<Player[]>(() => {
@@ -12,16 +13,15 @@ export const Field = () => {
     return p;
   });
   const [svgSize, setSvgSize] = useState({ width: 100, height: 100 });
+  const [formation, setFormation] = useState<string>("");
+  const [viewbox, setViewBox] = useState({ minx: 0, miny: 0, width: 1600, height: 2560 });
 
-  // return <svg width={svgSize.width} height={svgSize.height}></svg>;
   return (
     <div className="svg-container">
-      <svg viewBox="0 0 1600 2560">
+      <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} />
+      <svg viewBox={`${viewbox.minx} ${viewbox.miny} ${viewbox.width} ${viewbox.height} `}>
         <FieldSVG className="svg-field"></FieldSVG>
-        <circle cx={300} cy={300} r={100}>
-          {" "}
-          asdfasdf
-        </circle>
+        <circle cx={300} cy={300} r={100}></circle>
       </svg>
     </div>
   );

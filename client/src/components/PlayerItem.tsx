@@ -1,24 +1,28 @@
 import { Player } from "../types/types";
 
-export const PlayerItem = (player: Player) => {
+type props = {
+  player: Player;
+};
+export const PlayerItem = ({ player }: props) => {
   return (
     <div className="player-item">
-      <span className="player-number">
-        <svg>
+      <span className="stat number">
+        {/* <svg>
           <circle></circle>
-        </svg>
+        </svg> */}{" "}
+        {player.number}
       </span>
-      <span className="player-name"> name </span>
-      <span className="player-pos"> pos </span>
-      <span className="player-pace"> pos </span>
-      <span className="player-shooting"> pos </span>
-      <span className="player-physical"> pos </span>
-      <span className="player-defending"> pos </span>
-      <span className="player-dribbling"> pos </span>
-      <span className="player-passing"> pos </span>
-      <span className="player-vision"> pos </span>
-      <span className="player-height"> pos </span>
-      <span className="player-weight"> pos </span>
+      <span className="col-name">{player.name}</span>
+      <span className="stat pos">{player.position}</span>
+      <span className="stat pace">{player.pace}</span>
+      <span className="stat shooting">{player.shot}</span>
+      <span className="stat physical">{player.physical}</span>
+      <span className="stat defending">{player.defending}</span>
+      <span className="stat dribbling">{player.dribble}</span>
+      <span className="stat passing">{player.passing}</span>
+      <span className="stat vision">{player.vision}</span>
+      <span className="stat height">{player.height}</span>
+      <span className="stat weight">{player.weight}</span>
     </div>
   );
 };

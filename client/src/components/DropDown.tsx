@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import arrow from "../assets/arrow-down.svg";
 
-export const SquadPicker = () => {
-  const items: string[] = ["Item1", "Item2"];
+type DropDownProps = {
+  items: ReactNode[];
+};
+
+export const DropDown = ({ items }: DropDownProps) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string>("dropdown selection");
+  const [selected, setSelected] = useState<ReactNode>("dropdown selection");
 
   const handleOnClick = () => {
     setVisible(!visible);
   };
 
-  const handleSelect = (item: string) => {
+  const handleSelect = (item: ReactNode) => {
     setSelected(item);
+    setVisible(!visible);
   };
 
   return (
