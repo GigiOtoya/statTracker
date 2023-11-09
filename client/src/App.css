@@ -129,6 +129,9 @@
 }
 
 .squad-builder {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .table-header,
