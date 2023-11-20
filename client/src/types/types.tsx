@@ -1,6 +1,7 @@
 export type Player = {
   number: number;
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   position?: string;
   pace?: number;
   shot?: number;

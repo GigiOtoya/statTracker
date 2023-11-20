@@ -12,7 +12,7 @@ export const PlayerItem = ({ player }: props) => {
         </svg> */}{" "}
         {player.number}
       </span>
-      <span className="col-name">{player.name}</span>
+      <span className="col-name">{player.firstName}</span>
       <span className="stat pos">{player.position}</span>
       <span className="stat pace">{player.pace}</span>
       <span className="stat shooting">{player.shot}</span>
