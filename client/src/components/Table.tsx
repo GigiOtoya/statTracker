@@ -1,6 +1,5 @@
 import { Player } from "../types/types";
 import { useState } from "react";
-import mockData from "../utils/MOCK_DATA.json";
 import {
   createColumnHelper,
   getCoreRowModel,

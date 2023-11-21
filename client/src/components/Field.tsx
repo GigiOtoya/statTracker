@@ -18,7 +18,6 @@ export const Field = () => {
 
   return (
     <div className="svg-container">
-      <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} />
       <svg viewBox={`${viewbox.minx} ${viewbox.miny} ${viewbox.width} ${viewbox.height} `}>
         <FieldSVG className="svg-field"></FieldSVG>
         <circle cx={300} cy={300} r={100}></circle>
