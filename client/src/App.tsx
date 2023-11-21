@@ -8,14 +8,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <div className="dashboard">
-        <div className="left">
-          <SquadBuilder />
-        </div>
-        <div className="right">
-          <Field />
-        </div>
-      </div>
+      <SquadBuilder />
     </div>
   );
 }

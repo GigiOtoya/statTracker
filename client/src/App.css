@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-.dashboard {
+.main-container {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -30,6 +30,7 @@
 
 .left {
   display: flex;
+  flex-direction: column;
   background-color: #23272e;
   width: 60%;
   padding: 10px;
@@ -43,7 +44,7 @@
   width: 40%;
 }
 
-.squad-builder-container {
+.table-container {
   width: 100%;
 }
 
@@ -56,7 +57,7 @@
   filter: drop-shadow(1px 1px 5px #758ab4);
 }
 
-.dropdown {
+.dropdown-container {
   display: flex;
   flex-direction: column;
 }
@@ -173,30 +174,34 @@
 table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 20px;
   text-align: left;
 }
 
 thead {
-  background-color: rgb(0, 0, 0);
+  background-color: #14161a;
   width: 100%;
   color: white;
 }
 
 th {
   padding: 4px 10px;
+  font-size: 20px;
 }
 
 td {
   color: white;
   padding: 8px 10px;
+  font-size: 18px;
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #14161a;
+  background-color: #23272e;
+
   padding-block: 8px;
 }
 
 tbody tr:nth-child(even) {
-  background-color: #23272e;
+  background-color: #171a1f;
+
+  padding-block: 8px;
 }

@@ -19,7 +19,7 @@ export const DropDown = ({ items }: DropDownProps) => {
   };
 
   return (
-    <div className="dropdown">
+    <div className="dropdown-container">
       <div className="dropdown-main">
         <span className="dropdown-selection"> {selected} </span>
         <span className="dropdown-btn" onClick={handleOnClick}>
