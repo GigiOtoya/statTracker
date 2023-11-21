@@ -169,3 +169,34 @@
 .col-name {
   min-width: 100px;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 20px;
+  text-align: left;
+}
+
+thead {
+  background-color: rgb(0, 0, 0);
+  width: 100%;
+  color: white;
+}
+
+th {
+  padding: 4px 10px;
+}
+
+td {
+  color: white;
+  padding: 8px 10px;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #14161a;
+  padding-block: 8px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #23272e;
+}

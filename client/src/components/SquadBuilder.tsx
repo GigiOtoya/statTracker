@@ -18,8 +18,27 @@ export const SquadBuilder = () => {
       cell: (info) => info.renderValue(),
     }),
 
-    columnHelper.accessor((row) => `${row.firstName} ${row.lastName}`, {
-      id: "Full Name",
+    // columnHelper.accessor((row) => `${row.firstName} ${row.lastName}`, {
+    //   id: "Full Name",
+    // }),
+
+    columnHelper.accessor("position", {
+      header: () => "Position",
+      cell: (info) => info.renderValue(),
+    }),
+
+    columnHelper.group({
+      header: "Name",
+      columns: [
+        columnHelper.accessor("firstName", {
+          header: () => "First",
+          cell: (info) => info.renderValue(),
+        }),
+        columnHelper.accessor("lastName", {
+          header: () => "Last",
+          cell: (info) => info.renderValue(),
+        }),
+      ],
     }),
 
     columnHelper.group({
@@ -86,7 +105,7 @@ export const SquadBuilder = () => {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th key={header.id} colSpan={header.colSpan}>
                   {" "}
                   {header.isPlaceholder
                     ? null
