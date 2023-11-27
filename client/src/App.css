@@ -210,3 +210,11 @@ tbody tr:nth-child(even) {
 
   padding-block: 8px;
 }
+
+circle:hover {
+  cursor: grab;
+}
+
+circle:active {
+  cursor: grabbing;
+}

@@ -5,6 +5,7 @@ import { Table } from "./Table";
 import { SplitScreen } from "../Layouts/SplitScreen";
 import mockData from "../utils/MOCK_DATA.json";
 import { useState } from "react";
+import { getSquadData, getAllSquads } from "../api/SquadApi";
 
 export const SquadBuilder = () => {
   const [data, setData] = useState<Player[]>(mockData);
