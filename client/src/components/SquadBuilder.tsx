@@ -4,21 +4,32 @@ import { Field } from "./Field";
 import { Table } from "./Table";
 import { SplitScreen } from "../Layouts/SplitScreen";
 import mockData from "../utils/MOCK_DATA.json";
-import { useState } from "react";
-import { getSquadData, getAllSquads } from "../api/SquadApi";
+import { useEffect, useState } from "react";
+import { getSquadData, getAllSquads, getSquadNames } from "../api/SquadApi";
+import { error } from "console";
 
 export const SquadBuilder = () => {
   const [data, setData] = useState<Player[]>(mockData);
-  const items: string[] = ["Squad 1", "Squad 2"];
+  const [squadNames, setSquadNames] = useState<String[]>([]);
+
+  useEffect(() => {
+    getSquadNames()
+      .then((res) => {
+        setSquadNames(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <SplitScreen>
       <>
-        <DropDown items={items} />
+        <DropDown items={squadNames} />
         <Table data={data} />
       </>
       <>
-        <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} />
+        <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} placeHolder={"Formation"} />
         <Field />
       </>
     </SplitScreen>

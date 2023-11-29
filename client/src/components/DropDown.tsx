@@ -3,9 +3,10 @@ import arrow from "../assets/arrow-down.svg";
 
 type DropDownProps = {
   items: ReactNode[];
+  placeHolder?: String;
 };
 
-export const DropDown = ({ items }: DropDownProps) => {
+export const DropDown = ({ items, placeHolder }: DropDownProps) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [selected, setSelected] = useState<ReactNode>("dropdown selection");
 
@@ -21,9 +22,12 @@ export const DropDown = ({ items }: DropDownProps) => {
   return (
     <div className="dropdown-container">
       <div className="dropdown-main">
-        <span className="dropdown-selection"> {selected} </span>
         <span className="dropdown-btn" onClick={handleOnClick}>
           <img src={arrow} alt="arrow" width={20} />
+        </span>
+        <span className="dropdown-selection">
+          {placeHolder ? `${placeHolder}: ` : ""}
+          {selected}
         </span>
       </div>
       {visible && (

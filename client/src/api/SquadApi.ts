@@ -1,9 +1,17 @@
-import api from "./Api";
+import apiClient from "./Api";
 
 export const getAllSquads = () => {
-  return api.get("/squad");
+  return apiClient.get("/squad");
 };
 
 export const getSquadData = (id: number) => {
-  return api.get(`/squad/${id}`);
+  return apiClient.get(`/squad/id/${id}`);
+};
+
+export const getSquadNames = () => {
+  return apiClient.get("/squad/names");
+};
+
+export const addSquad = (name: string) => {
+  return apiClient.post("/squad");
 };

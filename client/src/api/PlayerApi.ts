@@ -1,5 +1,5 @@
-import api from "./Api";
+import apiClient from "./Api";
 
 export const getPlayerData = () => {
-  return api.get("/player");
+  return apiClient.get("/player");
 };
