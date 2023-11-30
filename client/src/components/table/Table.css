@@ -40,13 +40,13 @@ thead {
 
 th {
   padding: 4px 10px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 td {
   color: white;
   padding: 8px 10px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 tbody tr:nth-child(odd) {

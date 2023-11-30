@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import "./Modal.css";
 interface modalProps {
   visible: boolean;
-  setVisible: () => void;
+  setVisible: (value: boolean) => void;
+  children?: ReactNode;
 }
 
-export const Modal = ({ visible, setVisible }: modalProps) => {
+export const Modal = ({ visible, setVisible, children }: modalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -17,16 +18,15 @@ export const Modal = ({ visible, setVisible }: modalProps) => {
       }
   }, [visible]);
 
+  const handleCloseModal = (value: boolean) => {
+    setVisible(value);
+  };
+
   return (
-    <dialog ref={modalRef} className="modal">
-      <h2>SOME TITLE</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sequi unde veniam doloremque
-        assumenda sapiente. Temporibus minima aut consectetur. Sunt libero consectetur iste minus
-        totam vitae illum id, soluta excepturi?
-      </p>
-      <button className="btn-close" onClick={setVisible}>
-        close
+    <dialog ref={modalRef} className="modal" onClose={() => setVisible(false)}>
+      {children}
+      <button className="btn-close" onClick={() => setVisible(false)}>
+        Cancel
       </button>
     </dialog>
   );

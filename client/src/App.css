@@ -6,6 +6,39 @@
   width: 100%;
   height: 100%;
 }
+@font-face {
+  font-family: "Roboto";
+  src: url(/src/assets/Roboto/Roboto-Black.ttf) format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(/src/assets/Roboto/Roboto-Light.ttf) format("truetype");
+  font-weight: light;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(/src/assets/Roboto/Roboto-Thin.ttf) format("truetype");
+  font-weight: thin;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(/src/assets/Roboto/Roboto-Medium.ttf) format("truetype");
+  font-weight: medium;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(/src/assets/Roboto/Roboto-Bold.ttf) format("truetype");
+  font-weight: bold;
+}
+
+* {
+  font-family: "Roboto";
+}
 
 .main-container {
   display: flex;
