@@ -1,0 +1,10 @@
+::backdrop {
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
+  opacity: 0.5;
+}
+
+.modal {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 720px;
+}

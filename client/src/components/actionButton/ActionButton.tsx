@@ -4,12 +4,12 @@ interface buttonProps {
   text: string;
   icon: string;
   type: ButtonType;
-  fn?: () => {};
+  fn?: () => void;
 }
 
-export const ActionButton = ({ text, icon, type }: buttonProps) => {
+export const ActionButton = ({ text, icon, type, fn }: buttonProps) => {
   return (
-    <button className={`action-btn ${type}`}>
+    <button className={`action-btn ${type}`} onClick={fn}>
       <img src={icon} alt="icon" />
       <span>{text}</span>
     </button>
