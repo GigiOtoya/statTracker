@@ -13,3 +13,7 @@ export type Player = {
   height?: string;
   weight?: number;
 };
+
+export const buttonTypes = ["btn-positive", "btn-negative"];
+
+export type ButtonType = (typeof buttonTypes)[number];

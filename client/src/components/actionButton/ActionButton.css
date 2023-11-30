@@ -1,0 +1,36 @@
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  float: right;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  margin-inline-start: 8px;
+  box-sizing: border-box;
+  color: white;
+  font-weight: bold;
+  user-select: none;
+}
+
+.action-btn:hover {
+  filter: brightness(85%);
+  cursor: pointer;
+}
+
+.action-btn:active {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-positive {
+  background-color: rgb(60, 72, 182);
+}
+
+.btn-negative {
+  background-color: rgb(206, 54, 54);
+}
+
+.action-btn img {
+  margin-right: 4px;
+  box-sizing: border-box;
+}

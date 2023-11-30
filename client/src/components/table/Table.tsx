@@ -1,5 +1,7 @@
-import { Player } from "../types/types";
-import { useState } from "react";
+import { Player } from "../../types/types";
+import { ReactNode, useState } from "react";
+import { Tooltip } from "../tooltip/Tooltip";
+import "./Table.css";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -11,8 +13,9 @@ import {
 
 interface TableProps {
   data: Player[];
+  children?: ReactNode;
 }
-export const Table = ({ data }: TableProps) => {
+export const Table = ({ data, children }: TableProps) => {
   const columnHelper = createColumnHelper<Player>();
   const columns = [
     columnHelper.accessor("number", {
@@ -44,37 +47,37 @@ export const Table = ({ data }: TableProps) => {
       header: "Attributes",
       columns: [
         columnHelper.accessor("pace", {
-          header: () => "Pace",
+          header: () => <Tooltip text={"SPD"} tooltipText={"Speed"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("passing", {
-          header: () => "Passing",
+          header: () => <Tooltip text={"PAS"} tooltipText={"Passing"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("shot", {
-          header: () => "Shooting",
+          header: () => <Tooltip text={"SHO"} tooltipText={"Shooting"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("defending", {
-          header: () => "Defending",
+          header: () => <Tooltip text={"DEF"} tooltipText={"Defending"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("dribble", {
-          header: () => "Dribbling",
+          header: () => <Tooltip text={"DRB"} tooltipText={"Dribbling"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("physical", {
-          header: () => "Physical",
+          header: () => <Tooltip text={"PHY"} tooltipText={"Physical"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("vision", {
-          header: () => "Vision",
+          header: () => <Tooltip text={"VIS"} tooltipText={"Vision"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
@@ -95,6 +98,10 @@ export const Table = ({ data }: TableProps) => {
 
   return (
     <div className="table-container">
+      <div className="table-header">
+        <span className="table-header-left">Manage Squad</span>
+        <span className="table-header-right">{children}</span>
+      </div>
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
