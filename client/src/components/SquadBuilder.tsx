@@ -17,7 +17,7 @@ export const SquadBuilder = () => {
   const [data, setData] = useState<Player[]>(mockData);
   const [squadNames, setSquadNames] = useState<String[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<ReactNode>(AddSquad);
+  const [modalContent, setModalContent] = useState<ReactNode>();
 
   useEffect(() => {
     getSquadNames()

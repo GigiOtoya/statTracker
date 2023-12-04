@@ -29,8 +29,10 @@ export const Modal = ({ visible, setVisible, children }: modalProps) => {
   };
 
   return (
-    <dialog ref={modalRef} className="modal" onClose={closeModal}>
-      <ModalContext.Provider value={{ closeModal }}>{children}</ModalContext.Provider>
-    </dialog>
+    <ModalContext.Provider value={{ closeModal }}>
+      <dialog ref={modalRef} className="modal" onClose={closeModal}>
+        {children}
+      </dialog>
+    </ModalContext.Provider>
   );
 };
