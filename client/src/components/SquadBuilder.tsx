@@ -15,7 +15,7 @@ import { getSquadData, getAllSquads, getSquadNames } from "../api/SquadApi";
 
 export const SquadBuilder = () => {
   const [data, setData] = useState<Player[]>(mockData);
-  const [squadNames, setSquadNames] = useState<String[]>([]);
+  const [squadNames, setSquadNames] = useState<string[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode>();
 
@@ -36,6 +36,10 @@ export const SquadBuilder = () => {
     setModalVisible(value);
   };
 
+  const updateSquadList = (nameList: string[]) => {
+    setSquadNames(nameList);
+  };
+
   return (
     <SplitScreen>
       <>
@@ -48,7 +52,7 @@ export const SquadBuilder = () => {
             text={"Add New Squad"}
             icon={addIcon}
             type={buttonTypes[0]}
-            fn={(value) => toggleModal(value, <AddSquad />)}
+            fn={(value) => toggleModal(value, <AddSquad updateSquadList={updateSquadList} />)}
           />
           <ActionButton
             text={"Delete Squad"}

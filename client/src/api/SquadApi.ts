@@ -1,3 +1,4 @@
+import { Squad } from "../types/types";
 import apiClient from "./Api";
 
 export const getAllSquads = () => {
@@ -12,6 +13,6 @@ export const getSquadNames = () => {
   return apiClient.get("/squad/names");
 };
 
-export const addSquad = (name: string) => {
-  return apiClient.post("/squad");
+export const addSquad = (squad: Squad) => {
+  return apiClient.post("/squad", squad);
 };

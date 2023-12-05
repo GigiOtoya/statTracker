@@ -1,3 +1,8 @@
+export type Squad = {
+  name: string;
+  players?: Player[];
+};
+
 export type Player = {
   number: number;
   firstName?: string;
