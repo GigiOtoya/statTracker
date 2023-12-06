@@ -14,8 +14,8 @@ export const PlayerItem = ({ player }: props) => {
       </span>
       <span className="col-name">{player.firstName}</span>
       <span className="stat pos">{player.position}</span>
-      <span className="stat pace">{player.pace}</span>
-      <span className="stat shooting">{player.shot}</span>
+      <span className="stat pace">{player.speed}</span>
+      <span className="stat shooting">{player.shooting}</span>
       <span className="stat physical">{player.physical}</span>
       <span className="stat defending">{player.defending}</span>
       <span className="stat dribbling">{player.dribble}</span>

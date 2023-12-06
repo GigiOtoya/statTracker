@@ -46,7 +46,7 @@ export const Table = ({ data, children }: TableProps) => {
     columnHelper.group({
       header: "Attributes",
       columns: [
-        columnHelper.accessor("pace", {
+        columnHelper.accessor("speed", {
           header: () => <Tooltip text={"SPD"} tooltipText={"Speed"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
@@ -56,7 +56,7 @@ export const Table = ({ data, children }: TableProps) => {
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
-        columnHelper.accessor("shot", {
+        columnHelper.accessor("shooting", {
           header: () => <Tooltip text={"SHO"} tooltipText={"Shooting"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
@@ -87,10 +87,12 @@ export const Table = ({ data, children }: TableProps) => {
 
   // const [data, setData] = useState<Player[]>(mockData);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
     data,
     columns,
-    state: { sorting },
+    enableRowSelection: true,
+    state: { sorting, rowSelection },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

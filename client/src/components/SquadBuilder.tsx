@@ -12,6 +12,7 @@ import addIcon from "../assets/add.svg";
 import deleteIcon from "../assets/delete.svg";
 import { useEffect, useState, ReactNode } from "react";
 import { getSquadData, getAllSquads, getSquadNames } from "../api/SquadApi";
+import { AddPlayer } from "./addPlayer/AddPlayer";
 
 export const SquadBuilder = () => {
   const [data, setData] = useState<Player[]>(mockData);
@@ -22,7 +23,7 @@ export const SquadBuilder = () => {
   useEffect(() => {
     getSquadNames()
       .then((res) => {
-        setSquadNames(res.data);
+        updateSquadList(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -61,6 +62,7 @@ export const SquadBuilder = () => {
             fn={(value) => toggleModal(value, <DeleteSquad />)}
           />
         </Table>
+        <AddPlayer />
       </>
       <>
         <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} placeHolder={"Formation"} />
