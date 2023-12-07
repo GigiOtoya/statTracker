@@ -23,5 +23,53 @@
   display: flex;
   flex-direction: column;
   flex: 1 0 1;
-  max-width: 80px;
+  max-width: 100px;
+}
+
+/* .slider-label {
+}
+.slider-value {
+} */
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #545a5f;
+  border-radius: 4px;
+  height: 8px;
+}
+
+input[type="range"]::-moz-range-track {
+  background-color: #545a5f;
+  border-radius: 4px;
+  height: 8px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #336dff;
+  height: 20px;
+  margin-top: -6px;
+  width: 10px;
+  border-radius: 2px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  background-color: #336dff;
+  border: none;
+  border-radius: 2px;
+  height: 20px;
+  width: 10px;
 }

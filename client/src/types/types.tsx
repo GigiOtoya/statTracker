@@ -24,13 +24,27 @@ export const defaultPlayer: Player = {
   firstName: "",
   lastName: "",
   position: "",
-  speed: 0,
-  shooting: 0,
-  physical: 0,
-  defending: 0,
-  dribble: 0,
-  passing: 0,
-  vision: 0,
+  speed: 1,
+  shooting: 1,
+  physical: 1,
+  defending: 1,
+  dribble: 1,
+  passing: 1,
+  vision: 1,
+};
+
+export const positions = {
+  GK: "GK",
+  LB: "LB",
+  CB: "CB",
+  RB: "RB",
+  LM: "LM",
+  CM: "CM",
+  RM: "RM",
+  LW: "LW",
+  RW: "RW",
+  ST: "ST",
+  CF: "CF",
 };
 
 export const playerData = Object.keys(defaultPlayer).reduce((name, key) => {
