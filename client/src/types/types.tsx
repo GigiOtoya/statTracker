@@ -20,7 +20,7 @@ export type Player = {
 };
 
 export const defaultPlayer: Player = {
-  number: 0,
+  number: 1,
   firstName: "",
   lastName: "",
   position: "",

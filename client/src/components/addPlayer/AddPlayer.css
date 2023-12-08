@@ -59,7 +59,7 @@ input[type="range"]::-moz-range-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  background-color: #336dff;
+  background-color: #06b100;
   height: 20px;
   margin-top: -6px;
   width: 10px;
@@ -67,7 +67,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]::-moz-range-thumb {
-  background-color: #336dff;
+  background-color: #06b100;
   border: none;
   border-radius: 2px;
   height: 20px;
