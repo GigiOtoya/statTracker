@@ -39,7 +39,7 @@ export const AddPlayer = () => {
             type="text"
             name={playerData.firstName}
             value={player.firstName}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           ></Input>
         </div>
         <div className="player-data-name">
@@ -48,7 +48,7 @@ export const AddPlayer = () => {
             type="text"
             name={playerData.lastName}
             value={player.lastName}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           ></Input>
         </div>
       </div>
@@ -66,7 +66,7 @@ export const AddPlayer = () => {
               type="number"
               name={playerData.number}
               value={player.number}
-              onChange={handleOnChange}
+              updatePlayer={updatePlayer}
             />
           </div>
         </div>
@@ -75,19 +75,19 @@ export const AddPlayer = () => {
             label="Speed"
             name={playerData.speed}
             value={player.speed}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           />
           <Slider
             label="Passing"
             name={playerData.passing}
             value={player.passing}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           />
           <Slider
             label="Shooting"
             name={playerData.shooting}
             value={player.shooting}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           />
         </div>
         <div className="split-3-data">
@@ -95,19 +95,19 @@ export const AddPlayer = () => {
             label="Defending"
             name={playerData.defending}
             value={player.defending}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           />
           <Slider
             label="Dribbling"
             name={playerData.dribble}
             value={player.dribble}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           />
           <Slider
             label="Physical"
             name={playerData.physical}
             value={player.physical}
-            onChange={handleOnChange}
+            updatePlayer={updatePlayer}
           />
         </div>
       </div>

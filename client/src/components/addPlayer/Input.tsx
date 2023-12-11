@@ -3,19 +3,18 @@ interface InputProps {
   type?: string;
   name: string;
   value?: string | number;
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  updatePlayer: (name: string, value: string | number) => void;
 }
 
 export const Input = (props: InputProps) => {
-  const { label, type, name, value, onChange } = props;
+  const { label, type, name, value, updatePlayer } = props;
   const min = 1;
   const max = 99;
 
   const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
-    const value = type === "number" ? validateNumber(e.currentTarget.value) : 1;
-
-    onChange(e);
+    const value = validate(e.currentTarget.value);
+    updatePlayer(name, value);
   };
 
   const validate = (value: string) => {
@@ -25,7 +24,7 @@ export const Input = (props: InputProps) => {
     return validateText(value);
   };
 
-  const validateNumber = (num: number | string) => {
+  const validateNumber = (num: string) => {
     const value = Number(num);
     if (!value) return num;
     if (value > max) return max;
@@ -33,7 +32,15 @@ export const Input = (props: InputProps) => {
     return value;
   };
 
-  const validateText = (str: string) => {};
+  const validateText = (str: string) => {
+    return str;
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (type === "number") {
+      ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
+    }
+  };
 
   return (
     <div>
@@ -45,7 +52,8 @@ export const Input = (props: InputProps) => {
         type={type}
         name={name}
         value={value}
-        onChange={onChange}
+        onChange={handleOnChange}
+        onKeyDown={handleKeyDown}
         {...(type === "number" ? { min: min, max: max } : {})}
       />
     </div>
