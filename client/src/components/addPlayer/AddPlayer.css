@@ -24,12 +24,46 @@
   flex-direction: column;
   flex: 1 0 1;
   max-width: 100px;
+  width: 100%;
 }
 
-/* .slider-label {
+.horizontal-select-container {
 }
-.slider-value {
-} */
+
+.horizontal-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.horizontal-select .shift img {
+  display: flex;
+  max-width: 100%;
+}
+
+.horizontal-select .shift {
+  background-color: #06b100;
+  border-radius: 2px;
+  width: 20%;
+}
+
+.horizontal-select .shift:hover {
+  filter: brightness(80%);
+  cursor: pointer;
+}
+
+.horizontal-select .shift:active {
+  /* border-color: rgba(255, 255, 255, 0.3); */
+}
+
+.horizontal-select .not-selected {
+  font-size: 12px;
+  filter: brightness(50%);
+}
+
+.horizontal-select .selected {
+}
 
 .slider-header {
   display: flex;

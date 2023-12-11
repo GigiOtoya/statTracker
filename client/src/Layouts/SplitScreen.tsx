@@ -1,3 +1,5 @@
+import "./SplitScreen.css";
+
 interface SplitScreenProps {
   children: React.ReactNode[];
 }

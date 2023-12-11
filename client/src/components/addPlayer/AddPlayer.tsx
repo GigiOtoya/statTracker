@@ -3,15 +3,18 @@ import "./AddPlayer.css";
 import { Player, defaultPlayer, playerData } from "../../types/types";
 import { Slider } from "./Slider";
 import { Input } from "./Input";
+import { HorizontalSelect } from "./HorizontalSelect";
 
 export const AddPlayer = () => {
   const [player, setPlayer] = useState<Player>(defaultPlayer);
 
   const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
-
     const value = validateNumber(e.currentTarget.value);
+    updatePlayer(name, value);
+  };
 
+  const updatePlayer = (name: string, value: string | number) => {
     setPlayer((prev) => ({
       ...prev,
       [name]: value,
@@ -52,11 +55,11 @@ export const AddPlayer = () => {
       <div className="split-3">
         <div className="split-3-data">
           <div>
-            <Input
+            <HorizontalSelect
               label="Position"
               name={playerData.position}
               value={player.position}
-              onChange={handleOnChange}
+              updatePlayer={updatePlayer}
             />
             <Input
               label="Number"

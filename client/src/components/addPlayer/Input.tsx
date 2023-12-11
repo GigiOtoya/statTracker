@@ -18,11 +18,11 @@ export const Input = (props: InputProps) => {
     onChange(e);
   };
 
-  const validate = (val: number | string) => {
-    if (Number(val)) {
-      return validateNumber(val);
+  const validate = (value: string) => {
+    if (Number(value)) {
+      return validateNumber(value);
     }
-    // return validateText(val);
+    return validateText(value);
   };
 
   const validateNumber = (num: number | string) => {
