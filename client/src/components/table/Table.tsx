@@ -66,7 +66,7 @@ export const Table = ({ data, children }: TableProps) => {
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
-        columnHelper.accessor("dribble", {
+        columnHelper.accessor("dribbling", {
           header: () => <Tooltip text={"DRB"} tooltipText={"Dribbling"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,

@@ -15,7 +15,7 @@ export const AddSquad = ({ updateSquadList }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const squad: Squad = { name };
+    const squad: Squad = { name, players: [] };
     console.log(squad);
 
     await addSquad(squad)

@@ -1,21 +1,24 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import arrow from "../assets/arrow-down.svg";
+import { Item } from "../types/types";
 
 type DropDownProps = {
-  items: ReactNode[];
+  items: Item[];
   placeHolder?: String;
+  switchItem: (id: number) => void;
 };
 
-export const DropDown = ({ items, placeHolder }: DropDownProps) => {
+export const DropDown = ({ items, placeHolder, switchItem }: DropDownProps) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<ReactNode>("dropdown selection");
+  const [selected, setSelected] = useState<Item>();
 
   const handleOnClick = () => {
     setVisible(!visible);
   };
 
-  const handleSelect = (item: ReactNode) => {
+  const handleSelect = (item: Item) => {
     setSelected(item);
+    switchItem(item.id);
     setVisible(!visible);
   };
 
@@ -25,18 +28,15 @@ export const DropDown = ({ items, placeHolder }: DropDownProps) => {
         <span className="dropdown-btn" onClick={handleOnClick}>
           <img src={arrow} alt="arrow" width={20} />
         </span>
-        <span className="dropdown-selection">
-          {placeHolder ? `${placeHolder}: ` : ""}
-          {selected}
-        </span>
+        <span className="dropdown-selection">{selected?.name ?? placeHolder}</span>
       </div>
       {visible && (
         <div className="dropdown-contents">
           <ul className="dropdown-list">
             {items.map((item) => (
-              <li className="dropdown-item" onClick={() => handleSelect(item)}>
+              <li key={item.id} className="dropdown-item" onClick={() => handleSelect(item)}>
                 {" "}
-                {item}{" "}
+                {item.name}{" "}
               </li>
             ))}
           </ul>

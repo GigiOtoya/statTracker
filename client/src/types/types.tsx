@@ -1,9 +1,16 @@
-export type Squad = {
+export interface Item {
+  id: number;
   name: string;
-  players?: Player[];
-};
+}
+
+export interface Squad {
+  id?: number;
+  name: string;
+  players: Player[];
+}
 
 export type Player = {
+  id?: number;
   number: number;
   firstName?: string;
   lastName?: string;
@@ -12,11 +19,9 @@ export type Player = {
   shooting?: number;
   physical?: number;
   defending?: number;
-  dribble?: number;
+  dribbling?: number;
   passing?: number;
   vision?: number;
-  height?: string;
-  weight?: number;
 };
 
 export const defaultPlayer: Player = {
@@ -28,7 +33,7 @@ export const defaultPlayer: Player = {
   shooting: 1,
   physical: 1,
   defending: 1,
-  dribble: 1,
+  dribbling: 1,
   passing: 1,
   vision: 1,
 };

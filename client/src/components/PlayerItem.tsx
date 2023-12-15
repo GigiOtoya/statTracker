@@ -18,11 +18,9 @@ export const PlayerItem = ({ player }: props) => {
       <span className="stat shooting">{player.shooting}</span>
       <span className="stat physical">{player.physical}</span>
       <span className="stat defending">{player.defending}</span>
-      <span className="stat dribbling">{player.dribble}</span>
+      <span className="stat dribbling">{player.dribbling}</span>
       <span className="stat passing">{player.passing}</span>
       <span className="stat vision">{player.vision}</span>
-      <span className="stat height">{player.height}</span>
-      <span className="stat weight">{player.weight}</span>
     </div>
   );
 };

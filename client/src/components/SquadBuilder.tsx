@@ -1,4 +1,4 @@
-import { Player, buttonTypes } from "../types/types";
+import { Player, Item, buttonTypes } from "../types/types";
 import { DropDown } from "./DropDown";
 import { Field } from "./Field";
 import { Table } from "./table/Table";
@@ -7,28 +7,51 @@ import { ActionButton } from "./actionButton/ActionButton";
 import { Modal } from "./modals/Modal";
 import { AddSquad } from "./modals/AddSquad";
 import { DeleteSquad } from "./modals/DeleteSquad";
-import mockData from "../utils/MOCK_DATA.json";
 import addIcon from "../assets/add.svg";
 import deleteIcon from "../assets/delete.svg";
 import { useEffect, useState, ReactNode } from "react";
-import { getSquadData, getAllSquads, getSquadNames } from "../api/SquadApi";
+import { getSquadList } from "../api/SquadApi";
+import { getSquadPlayers } from "../api/PlayerApi";
 import { AddPlayer } from "./addPlayer/AddPlayer";
 
 export const SquadBuilder = () => {
-  const [data, setData] = useState<Player[]>(mockData);
-  const [squadNames, setSquadNames] = useState<string[]>([]);
+  const [squadList, setSquadList] = useState<Item[]>([]);
+  const [selectedSquad, setSelectedSquad] = useState<number>();
+  const [players, setPlayers] = useState<Player[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode>();
 
   useEffect(() => {
-    getSquadNames()
+    getSquadList()
       .then((res) => {
-        updateSquadList(res.data);
+        setSquadList(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (selectedSquad) {
+      getSquadPlayers(selectedSquad)
+        .then((res) => {
+          const players: Player[] = res.data;
+          console.log(players);
+          setPlayers(players);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [selectedSquad]);
+
+  const fetchSelectedSquad = (id: number) => {
+    setSelectedSquad(id);
+  };
+
+  const fetchSelectedFormation = (id: number) => {};
+
+  const updateSquadList = (nameList: string[]) => {};
 
   const toggleModal = (value: boolean, content?: ReactNode) => {
     if (content) {
@@ -37,18 +60,14 @@ export const SquadBuilder = () => {
     setModalVisible(value);
   };
 
-  const updateSquadList = (nameList: string[]) => {
-    setSquadNames(nameList);
-  };
-
   return (
     <SplitScreen>
       <>
-        <DropDown items={squadNames} />
+        <DropDown items={squadList} placeHolder="Select Squad" switchItem={fetchSelectedSquad} />
         <Modal visible={modalVisible} setVisible={toggleModal}>
           {modalContent}
         </Modal>
-        <Table data={data}>
+        <Table data={players}>
           <ActionButton
             text={"Add New Squad"}
             icon={addIcon}
@@ -65,7 +84,7 @@ export const SquadBuilder = () => {
         <AddPlayer />
       </>
       <>
-        <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} placeHolder={"Formation"} />
+        {/* <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} placeHolder={"Formation"} /> */}
         <Field />
       </>
     </SplitScreen>

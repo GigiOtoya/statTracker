@@ -55,17 +55,17 @@ export const AddPlayer = () => {
       <div className="split-3">
         <div className="split-3-data">
           <div>
-            <HorizontalSelect
-              label="Position"
-              name={playerData.position}
-              value={player.position}
-              updatePlayer={updatePlayer}
-            />
             <Input
               label="Number"
               type="number"
               name={playerData.number}
               value={player.number}
+              updatePlayer={updatePlayer}
+            />
+            <HorizontalSelect
+              label="Position"
+              name={playerData.position}
+              value={player.position}
               updatePlayer={updatePlayer}
             />
           </div>
@@ -99,8 +99,8 @@ export const AddPlayer = () => {
           />
           <Slider
             label="Dribbling"
-            name={playerData.dribble}
-            value={player.dribble}
+            name={playerData.dribbling}
+            value={player.dribbling}
             updatePlayer={updatePlayer}
           />
           <Slider
