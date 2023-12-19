@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { ModalContext } from "./Modal";
 import { useState } from "react";
-import { addSquad, getSquadNames } from "../../api/SquadApi";
-import { Squad } from "../../types/types";
+import { addSquad, getSquadList } from "../../api/SquadApi";
+import { Item, Squad } from "../../types/types";
 
 interface Props {
-  updateSquadList: (nameList: string[]) => void;
+  updateSquadList: (squadList: Item[]) => void;
 }
 
 export const AddSquad = ({ updateSquadList }: Props) => {
@@ -24,7 +24,7 @@ export const AddSquad = ({ updateSquadList }: Props) => {
       })
       .catch((err) => console.log(err));
 
-    await getSquadNames()
+    await getSquadList()
       .then((res) => {
         updateSquadList(res.data);
       })

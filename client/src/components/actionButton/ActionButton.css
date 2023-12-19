@@ -3,10 +3,8 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  float: right;
   border: 2px solid transparent;
   border-radius: 2px;
-  margin-inline-start: 8px;
   box-sizing: border-box;
   color: white;
   font-weight: bold;

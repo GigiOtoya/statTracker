@@ -1,17 +1,47 @@
 import { useState } from "react";
-import "./AddPlayer.css";
 import { Player, defaultPlayer, playerData } from "../../types/types";
 import { Slider } from "./Slider";
 import { Input } from "./Input";
 import { HorizontalSelect } from "./HorizontalSelect";
+import { ActionButton } from "../actionButton/ActionButton";
+import "./AddPlayer.css";
+import { getSquadPlayers, addPlayer } from "../../api/PlayerApi";
 
-export const AddPlayer = () => {
+interface Props {
+  selectedSquad?: number;
+  updatePlayers: (playerList: Player[]) => void;
+}
+
+export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
   const [player, setPlayer] = useState<Player>(defaultPlayer);
 
   const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
     const value = validateNumber(e.currentTarget.value);
     updatePlayer(name, value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (!selectedSquad) {
+      return;
+    }
+
+    const newPlayer: Player = { ...player };
+    await addPlayer(newPlayer)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+
+    await getSquadPlayers(selectedSquad)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const updatePlayer = (name: string, value: string | number) => {
@@ -110,6 +140,11 @@ export const AddPlayer = () => {
             updatePlayer={updatePlayer}
           />
         </div>
+      </div>
+      <div className="modal-footer">
+        <button className="modal-btn" type="submit">
+          Submit
+        </button>
       </div>
     </form>
   );

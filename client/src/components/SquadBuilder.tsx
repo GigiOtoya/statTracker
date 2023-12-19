@@ -1,5 +1,5 @@
 import { Player, Item, buttonTypes } from "../types/types";
-import { DropDown } from "./DropDown";
+import { DropDown } from "./dropdown/DropDown";
 import { Field } from "./Field";
 import { Table } from "./table/Table";
 import { SplitScreen } from "../Layouts/SplitScreen";
@@ -20,6 +20,7 @@ export const SquadBuilder = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode>();
+  const [editPlayerToggle, setEditPlayerToggle] = useState<boolean>(false);
 
   useEffect(() => {
     getSquadList()
@@ -49,9 +50,15 @@ export const SquadBuilder = () => {
     setSelectedSquad(id);
   };
 
+  const fetchSquadPlayers = (playerList: Player[]) => {
+    setPlayers(playerList);
+  };
+
   const fetchSelectedFormation = (id: number) => {};
 
-  const updateSquadList = (nameList: string[]) => {};
+  const updateSquadList = (items: Item[]) => {
+    setSquadList(items);
+  };
 
   const toggleModal = (value: boolean, content?: ReactNode) => {
     if (content) {
@@ -63,29 +70,36 @@ export const SquadBuilder = () => {
   return (
     <SplitScreen>
       <>
-        <DropDown items={squadList} placeHolder="Select Squad" switchItem={fetchSelectedSquad} />
-        <Modal visible={modalVisible} setVisible={toggleModal}>
-          {modalContent}
-        </Modal>
-        <Table data={players}>
+        <DropDown items={squadList} placeHolder="Select Squad" switchItem={fetchSelectedSquad}>
           <ActionButton
             text={"Add New Squad"}
             icon={addIcon}
             type={buttonTypes[0]}
             fn={(value) => toggleModal(value, <AddSquad updateSquadList={updateSquadList} />)}
           />
+        </DropDown>
+        <Modal visible={modalVisible} setVisible={toggleModal}>
+          {modalContent}
+        </Modal>
+        <Table data={players} updateData={fetchSquadPlayers} selectedSquad={selectedSquad}>
           <ActionButton
             text={"Delete Squad"}
             icon={deleteIcon}
             type={buttonTypes[1]}
             fn={(value) => toggleModal(value, <DeleteSquad />)}
           />
+          <ActionButton
+            text={"Add New Squad"}
+            icon={addIcon}
+            type={buttonTypes[0]}
+            fn={(value) => toggleModal(value, <AddSquad updateSquadList={updateSquadList} />)}
+          />
         </Table>
-        <AddPlayer />
+        {/* <AddPlayer selectedSquad={selectedSquad} updatePlayers={fetchSquadPlayers} /> */}
       </>
       <>
         {/* <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} placeHolder={"Formation"} /> */}
-        <Field />
+        <Field players={players} />
       </>
     </SplitScreen>
   );

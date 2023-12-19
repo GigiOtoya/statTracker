@@ -1,6 +1,11 @@
-import { Player } from "../../types/types";
+import { Player, Squad, buttonTypes } from "../../types/types";
 import { ReactNode, useState } from "react";
 import { Tooltip } from "../tooltip/Tooltip";
+import { ActionButton } from "../actionButton/ActionButton";
+import { ButtonType } from "../../types/types";
+import { AddPlayer } from "../addPlayer/AddPlayer";
+import addIcon from "../../assets/add.svg";
+
 import "./Table.css";
 import {
   createColumnHelper,
@@ -13,9 +18,13 @@ import {
 
 interface TableProps {
   data: Player[];
-  children?: ReactNode;
+  updateData: (playerList: Player[]) => void;
+  selectedSquad?: number;
+  children: ReactNode[];
 }
-export const Table = ({ data, children }: TableProps) => {
+export const Table = ({ data, children, selectedSquad, updateData }: TableProps) => {
+  const [left, right] = children;
+
   const columnHelper = createColumnHelper<Player>();
   const columns = [
     columnHelper.accessor("number", {
@@ -85,7 +94,6 @@ export const Table = ({ data, children }: TableProps) => {
     }),
   ];
 
-  // const [data, setData] = useState<Player[]>(mockData);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
@@ -98,12 +106,29 @@ export const Table = ({ data, children }: TableProps) => {
     getSortedRowModel: getSortedRowModel(),
   });
 
+  const [playerEdit, setPlayerEdit] = useState<boolean>(false);
+
+  const handleToggleEdit = () => {
+    setPlayerEdit(!playerEdit);
+  };
+
   return (
     <div className="table-container">
       <div className="table-header">
-        <span className="table-header-left">Manage Squad</span>
-        <span className="table-header-right">{children}</span>
+        <div className="table-header-left">Manage Squad</div>
+        <div className="table-header-right">
+          <div className="table-header-right-item">{left}</div>
+          <div className="table-header-right-item">
+            <ActionButton
+              text={playerEdit ? "Cancel Add Player" : "Add New Player"}
+              icon={playerEdit ? "" : addIcon}
+              type={buttonTypes[0]}
+              fn={handleToggleEdit}
+            />
+          </div>
+        </div>
       </div>
+      {playerEdit && <AddPlayer selectedSquad={selectedSquad} updatePlayers={updateData} />}
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

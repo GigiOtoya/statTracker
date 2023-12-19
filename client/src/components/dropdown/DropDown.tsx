@@ -1,14 +1,16 @@
-import { useState } from "react";
-import arrow from "../assets/arrow-down.svg";
-import { Item } from "../types/types";
+import { ReactNode, useState } from "react";
+import arrow from "../../assets/arrow-down.svg";
+import { Item } from "../../types/types";
+import "./DropDown.css";
 
 type DropDownProps = {
   items: Item[];
   placeHolder?: String;
+  children?: ReactNode;
   switchItem: (id: number) => void;
 };
 
-export const DropDown = ({ items, placeHolder, switchItem }: DropDownProps) => {
+export const DropDown = ({ items, placeHolder, switchItem, children }: DropDownProps) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [selected, setSelected] = useState<Item>();
 
@@ -24,14 +26,17 @@ export const DropDown = ({ items, placeHolder, switchItem }: DropDownProps) => {
 
   return (
     <div className="dropdown-container">
-      <div className="dropdown-main">
-        <span className="dropdown-btn" onClick={handleOnClick}>
+      <div className="dropdown-header">
+        <span className="dropdown-header-arrow" onClick={handleOnClick}>
           <img src={arrow} alt="arrow" width={20} />
         </span>
-        <span className="dropdown-selection">{selected?.name ?? placeHolder}</span>
+        <div className="dropdown-header-focal">
+          <div className="dropdown-header-focal-item">{selected?.name ?? placeHolder}</div>
+          <div className="dropdown-header-focal-item">{children}</div>
+        </div>
       </div>
       {visible && (
-        <div className="dropdown-contents">
+        <div className="dropdown-content">
           <ul className="dropdown-list">
             {items.map((item) => (
               <li key={item.id} className="dropdown-item" onClick={() => handleSelect(item)}>
