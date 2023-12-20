@@ -22,7 +22,6 @@ export const HorizontalSelect = ({ label, name, value, updatePlayer }: SelectPro
   };
 
   const handleOnClickRight = () => {
-    // setIndex((currIndex) => getRightIndex(currIndex));
     const newIndex = getRightIndex(index);
     setIndex(newIndex);
     updatePlayer(name, pos[newIndex]);

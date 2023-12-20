@@ -1,13 +1,23 @@
 .player-data-form {
   padding: 10px;
-  color: wheat;
-  background-color: #14161a;
+  color: white;
+}
+
+.player-data-header h2 {
+  padding: 0;
+  margin: 0;
 }
 
 .player-data-name {
   display: flex;
   flex-direction: column;
   flex: 1 0 200px;
+}
+
+.player-data-footer {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 30px;
 }
 
 .split-2 {
@@ -26,6 +36,7 @@
   flex: 1 0 1;
   max-width: 100px;
   width: 100%;
+  gap: 10px;
 }
 
 .horizontal-select-container {

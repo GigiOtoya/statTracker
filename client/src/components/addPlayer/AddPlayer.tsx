@@ -3,7 +3,6 @@ import { Player, defaultPlayer, playerData } from "../../types/types";
 import { Slider } from "./Slider";
 import { Input } from "./Input";
 import { HorizontalSelect } from "./HorizontalSelect";
-import { ActionButton } from "../actionButton/ActionButton";
 import "./AddPlayer.css";
 import { getSquadPlayers, addPlayer } from "../../api/PlayerApi";
 
@@ -21,15 +20,14 @@ export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
     updatePlayer(name, value);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!selectedSquad) {
       return;
     }
 
-    const newPlayer: Player = { ...player };
-    await addPlayer(newPlayer)
+    await addPlayer(player, selectedSquad)
       .then((res) => {
         console.log(res);
       })
@@ -37,7 +35,8 @@ export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
 
     await getSquadPlayers(selectedSquad)
       .then((res) => {
-        console.log(res);
+        const players: Player[] = res.data;
+        updatePlayers(players);
       })
       .catch((err) => {
         console.log(err);
@@ -61,7 +60,10 @@ export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
   };
 
   return (
-    <form className="player-data-form">
+    <form className="player-data-form" onSubmit={(e) => handleSubmit(e)}>
+      <div className="player-data-header">
+        <h2>New Player</h2>
+      </div>
       <div className="split-2">
         <div className="player-data-name">
           <Input
@@ -84,21 +86,25 @@ export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
       </div>
       <div className="split-3">
         <div className="split-3-data">
-          <div>
-            <Input
-              label="Number"
-              type="number"
-              name={playerData.number}
-              value={player.number}
-              updatePlayer={updatePlayer}
-            />
-            <HorizontalSelect
-              label="Position"
-              name={playerData.position}
-              value={player.position}
-              updatePlayer={updatePlayer}
-            />
-          </div>
+          <Input
+            label="Number"
+            type="number"
+            name={playerData.number}
+            value={player.number}
+            updatePlayer={updatePlayer}
+          />
+          <HorizontalSelect
+            label="Position"
+            name={playerData.position}
+            value={player.position}
+            updatePlayer={updatePlayer}
+          />
+          <Slider
+            label="Vision"
+            name={playerData.vision}
+            value={player.vision}
+            updatePlayer={updatePlayer}
+          />
         </div>
         <div className="split-3-data">
           <Slider
@@ -141,9 +147,9 @@ export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
           />
         </div>
       </div>
-      <div className="modal-footer">
-        <button className="modal-btn" type="submit">
-          Submit
+      <div className="player-data-footer">
+        <button className="action-btn btn-positive" type="submit">
+          Submit Player
         </button>
       </div>
     </form>

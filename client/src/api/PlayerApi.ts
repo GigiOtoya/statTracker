@@ -10,6 +10,6 @@ export const getSquadPlayers = (id: number): Promise<AxiosResponse<Player[]>> =>
   return apiClient.get(`/players/squad/${id}`);
 };
 
-export const addPlayer = (player: Player): Promise<AxiosResponse> => {
-  return apiClient.post("/players");
+export const addPlayer = (player: Player, squadId: number): Promise<AxiosResponse> => {
+  return apiClient.post("/players", player, { params: { squadId } });
 };

@@ -1,0 +1,22 @@
+.player-picker-container {
+  color: white;
+  width: 100%;
+}
+
+.player-picker-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #23272e;
+  border: 1px solid rgb(190, 190, 190);
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  user-select: none;
+}

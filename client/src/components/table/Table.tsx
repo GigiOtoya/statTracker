@@ -28,11 +28,13 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
   const columnHelper = createColumnHelper<Player>();
   const columns = [
     columnHelper.accessor("number", {
-      header: () => "Number",
+      id: "Number",
+      header: "#",
       cell: (info) => info.renderValue(),
     }),
 
     columnHelper.accessor("position", {
+      id: "Position",
       header: () => "Position",
       cell: (info) => info.renderValue(),
       enableSorting: false,
@@ -42,10 +44,12 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
       header: "Name",
       columns: [
         columnHelper.accessor("firstName", {
+          id: "First Name",
           header: () => "First",
           cell: (info) => info.renderValue(),
         }),
         columnHelper.accessor("lastName", {
+          id: "Last Name",
           header: () => "Last",
           cell: (info) => info.renderValue(),
         }),
@@ -56,36 +60,43 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
       header: "Attributes",
       columns: [
         columnHelper.accessor("speed", {
+          id: "Speed",
           header: () => <Tooltip text={"SPD"} tooltipText={"Speed"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("passing", {
+          id: "Passing",
           header: () => <Tooltip text={"PAS"} tooltipText={"Passing"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("shooting", {
+          id: "Shooting",
           header: () => <Tooltip text={"SHO"} tooltipText={"Shooting"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("defending", {
+          id: "Defending",
           header: () => <Tooltip text={"DEF"} tooltipText={"Defending"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("dribbling", {
+          id: "Dribbling",
           header: () => <Tooltip text={"DRB"} tooltipText={"Dribbling"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("physical", {
+          id: "Physical",
           header: () => <Tooltip text={"PHY"} tooltipText={"Physical"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
         }),
         columnHelper.accessor("vision", {
+          id: "Vision",
           header: () => <Tooltip text={"VIS"} tooltipText={"Vision"} />,
           cell: (info) => info.renderValue(),
           enableSorting: false,
@@ -119,12 +130,14 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
         <div className="table-header-right">
           <div className="table-header-right-item">{left}</div>
           <div className="table-header-right-item">
-            <ActionButton
-              text={playerEdit ? "Cancel Add Player" : "Add New Player"}
-              icon={playerEdit ? "" : addIcon}
-              type={buttonTypes[0]}
-              fn={handleToggleEdit}
-            />
+            {selectedSquad && (
+              <ActionButton
+                text={playerEdit ? "Cancel Add Player" : "Add New Player"}
+                icon={playerEdit ? "" : addIcon}
+                type={buttonTypes[0]}
+                fn={handleToggleEdit}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -158,7 +171,9 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                <td key={cell.id} data-label={cell.column.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
             </tr>
           ))}

@@ -61,3 +61,30 @@ tbody tr:nth-child(even) {
 
   padding-block: 8px;
 }
+
+@media screen and (max-width: 640px) {
+  table tr {
+    display: block;
+    padding-block: 0;
+  }
+
+  table tr:nth-child(odd) {
+    filter: brightness(50%);
+  }
+
+  table tbody td {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-block: 0;
+    line-height: 1.4;
+    border: 1px solid;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    display: inline-block;
+    font-weight: bold;
+    width: 30%;
+  }
+}

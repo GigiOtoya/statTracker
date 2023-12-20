@@ -12,7 +12,7 @@ import deleteIcon from "../assets/delete.svg";
 import { useEffect, useState, ReactNode } from "react";
 import { getSquadList } from "../api/SquadApi";
 import { getSquadPlayers } from "../api/PlayerApi";
-import { AddPlayer } from "./addPlayer/AddPlayer";
+import { PlayerPicker } from "./playerPicker/PlayerPicker";
 
 export const SquadBuilder = () => {
   const [squadList, setSquadList] = useState<Item[]>([]);
@@ -20,7 +20,6 @@ export const SquadBuilder = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode>();
-  const [editPlayerToggle, setEditPlayerToggle] = useState<boolean>(false);
 
   useEffect(() => {
     getSquadList()
@@ -100,6 +99,7 @@ export const SquadBuilder = () => {
       <>
         {/* <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} placeHolder={"Formation"} /> */}
         <Field players={players} />
+        <PlayerPicker players={players} />
       </>
     </SplitScreen>
   );
