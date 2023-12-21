@@ -35,7 +35,7 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
 
     columnHelper.accessor("position", {
       id: "Position",
-      header: () => "Position",
+      header: () => <Tooltip text={"POS"} tooltipText={"Position"} />,
       cell: (info) => info.renderValue(),
       enableSorting: false,
     }),

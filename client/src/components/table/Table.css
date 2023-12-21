@@ -68,6 +68,10 @@ tbody tr:nth-child(even) {
     padding-block: 0;
   }
 
+  thead {
+    display: none;
+  }
+
   table tr:nth-child(odd) {
     filter: brightness(50%);
   }
