@@ -1,3 +1,5 @@
+import { Positions } from "./positions";
+import { Omit } from "./utilityTypes";
 export interface Item {
   id: number;
   name: string;
@@ -14,7 +16,8 @@ export type Player = {
   number: number;
   firstName?: string;
   lastName?: string;
-  position?: string;
+  position?: Positions;
+  starter: boolean;
   speed?: number;
   shooting?: number;
   physical?: number;
@@ -24,11 +27,14 @@ export type Player = {
   vision?: number;
 };
 
+export type UpdatePlayerProperties = Partial<Omit<Player, "id">>;
+
 export const defaultPlayer: Player = {
   number: 1,
   firstName: "",
   lastName: "",
-  position: "",
+  position: undefined,
+  starter: false,
   speed: 1,
   shooting: 1,
   physical: 1,
@@ -38,25 +44,7 @@ export const defaultPlayer: Player = {
   vision: 1,
 };
 
-export const positions = {
-  GK: "GK",
-  LB: "LB",
-  CB: "CB",
-  RB: "RB",
-  LM: "LM",
-  CM: "CM",
-  RM: "RM",
-  LW: "LW",
-  RW: "RW",
-  ST: "ST",
-  CF: "CF",
-};
-
 export const playerData = Object.keys(defaultPlayer).reduce((name, key) => {
   name[key as keyof Player] = key as keyof Player;
   return name;
 }, {} as Record<keyof Player, keyof Player>);
-
-export const buttonTypes = ["btn-positive", "btn-negative"];
-
-export type ButtonType = (typeof buttonTypes)[number];

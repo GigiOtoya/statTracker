@@ -48,8 +48,12 @@ export const Field = ({ players }: FieldProps) => {
           <PlayerNodeSVG player={player} />
         ))}
 
-        <circle cx={300} cy={300} r={100} onMouseDown={handleMouseDown}></circle>
-        <circle cx={400} cy={300} r={100} onMouseDown={handleMouseDown}></circle>
+        <g>
+          <circle cx={300} cy={300} r={100} onMouseDown={handleMouseDown} />
+          <text x={300} y={300}>
+            sdfsdsdfsdf
+          </text>
+        </g>
       </svg>
     </div>
   );

@@ -3,8 +3,17 @@ import "./PlayerPicker.css";
 
 interface PlayerItemProps {
   player: Player;
+  handleMovePlayer: (player: Player) => void;
 }
 
-export const PlayerItem = ({ player }: PlayerItemProps) => {
-  return <div className="player-item">{player.number}</div>;
+export const PlayerItem = ({ player, handleMovePlayer }: PlayerItemProps) => {
+  const handleOnClick = () => {
+    handleMovePlayer(player);
+  };
+
+  return (
+    <div className="player-item" onClick={handleOnClick}>
+      {player.number}
+    </div>
+  );
 };

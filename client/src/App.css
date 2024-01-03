@@ -77,12 +77,6 @@
   flex-wrap: wrap;
 }
 
-.player-item {
-  font-size: 18px;
-  height: 40px;
-  background-color: #31363f;
-}
-
 .stat,
 .col-name {
   box-sizing: border-box;

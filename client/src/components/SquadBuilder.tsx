@@ -1,6 +1,6 @@
-import { Player, Item, buttonTypes } from "../types/types";
+import { Player, Item, UpdatePlayerProperties } from "../types/types";
+import { buttonTypes } from "../types/utilityTypes";
 import { DropDown } from "./dropdown/DropDown";
-import { Field } from "./Field";
 import { Table } from "./table/Table";
 import { SplitScreen } from "../Layouts/SplitScreen";
 import { ActionButton } from "./actionButton/ActionButton";
@@ -12,7 +12,7 @@ import deleteIcon from "../assets/delete.svg";
 import { useEffect, useState, ReactNode } from "react";
 import { getSquadList } from "../api/SquadApi";
 import { getSquadPlayers } from "../api/PlayerApi";
-import { PlayerPicker } from "./playerPicker/PlayerPicker";
+import { RightPane } from "./rightPane/RightPane";
 
 export const SquadBuilder = () => {
   const [squadList, setSquadList] = useState<Item[]>([]);
@@ -45,19 +45,30 @@ export const SquadBuilder = () => {
     }
   }, [selectedSquad]);
 
-  const fetchSelectedSquad = (id: number) => {
+  const changeSelectedSquad = (id: number) => {
     setSelectedSquad(id);
   };
 
-  const fetchSquadPlayers = (playerList: Player[]) => {
+  const updateSquadPlayers = (playerList: Player[]) => {
     setPlayers(playerList);
   };
 
-  const fetchSelectedFormation = (id: number) => {};
+  const updatePlayerProperties = (playerId: number, updatedProperties: UpdatePlayerProperties) => {
+    setPlayers((prevPlayers) => {
+      return prevPlayers.map((player) => {
+        if (player.id === playerId) {
+          return { ...player, ...updatedProperties };
+        }
+        return player;
+      });
+    });
+  };
 
   const updateSquadList = (items: Item[]) => {
     setSquadList(items);
   };
+
+  const changeSelectedFormation = (id: number) => {};
 
   const toggleModal = (value: boolean, content?: ReactNode) => {
     if (content) {
@@ -69,7 +80,7 @@ export const SquadBuilder = () => {
   return (
     <SplitScreen>
       <>
-        <DropDown items={squadList} placeHolder="Select Squad" switchItem={fetchSelectedSquad}>
+        <DropDown items={squadList} placeHolder="Select Squad" switchItem={changeSelectedSquad}>
           <ActionButton
             text={"Add New Squad"}
             icon={addIcon}
@@ -80,7 +91,7 @@ export const SquadBuilder = () => {
         <Modal visible={modalVisible} setVisible={toggleModal}>
           {modalContent}
         </Modal>
-        <Table data={players} updateData={fetchSquadPlayers} selectedSquad={selectedSquad}>
+        <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad}>
           <ActionButton
             text={"Delete Squad"}
             icon={deleteIcon}
@@ -94,12 +105,9 @@ export const SquadBuilder = () => {
             fn={(value) => toggleModal(value, <AddSquad updateSquadList={updateSquadList} />)}
           />
         </Table>
-        {/* <AddPlayer selectedSquad={selectedSquad} updatePlayers={fetchSquadPlayers} /> */}
       </>
       <>
-        {/* <DropDown items={["3-4-3", "4-3-3", "4-4-2", "5-3-2"]} placeHolder={"Formation"} /> */}
-        <Field players={players} />
-        <PlayerPicker players={players} />
+        <RightPane players={players} updatePlayerProperties={updatePlayerProperties} />
       </>
     </SplitScreen>
   );

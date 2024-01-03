@@ -1,8 +1,8 @@
-import { Player, Squad, buttonTypes } from "../../types/types";
+import { Player, Squad } from "../../types/types";
+import { buttonTypes } from "../../types/utilityTypes";
 import { ReactNode, useState } from "react";
 import { Tooltip } from "../tooltip/Tooltip";
 import { ActionButton } from "../actionButton/ActionButton";
-import { ButtonType } from "../../types/types";
 import { AddPlayer } from "../addPlayer/AddPlayer";
 import addIcon from "../../assets/add.svg";
 

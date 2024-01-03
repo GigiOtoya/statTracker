@@ -5,8 +5,11 @@ interface PlayerSVGProps {
 
 export const PlayerNodeSVG = ({ player }: PlayerSVGProps) => {
   return (
-    <circle>
-      <text> {player.number} </text>
-    </circle>
+    <g>
+      <circle>
+        <text> {player.number} </text>
+      </circle>
+      <text></text>
+    </g>
   );
 };

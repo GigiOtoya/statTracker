@@ -3,7 +3,15 @@
   width: 100%;
 }
 
-.player-picker-item {
+.player-picker-starters {
+  padding-block: 4px;
+}
+
+.player-picker-reserves {
+  padding-block: 4px;
+}
+
+.player-picker-items {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -15,8 +23,18 @@
   justify-content: center;
   background-color: #23272e;
   border: 1px solid rgb(190, 190, 190);
+  box-sizing: border-box;
   border-radius: 4px;
   width: 30px;
   height: 30px;
   user-select: none;
+}
+
+.player-item:hover {
+  border: 2px solid rgb(190, 190, 190);
+  cursor: pointer;
+}
+
+.player-item:active {
+  border: 3px solid rgb(255, 255, 255);
 }
