@@ -1,4 +1,4 @@
-import { Player } from "../../types/types";
+import { Player } from "../../types/teamTypes";
 import "./PlayerPicker.css";
 
 interface PlayerItemProps {

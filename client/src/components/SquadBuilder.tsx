@@ -1,4 +1,4 @@
-import { Player, Item, UpdatePlayerProperties } from "../types/types";
+import { Player, Item, UpdatePlayerProperties } from "../types/teamTypes";
 import { buttonTypes } from "../types/utilityTypes";
 import { DropDown } from "./dropdown/DropDown";
 import { Table } from "./table/Table";

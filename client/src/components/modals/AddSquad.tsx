@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ModalContext } from "./Modal";
 import { useState } from "react";
 import { addSquad, getSquadList } from "../../api/SquadApi";
-import { Item, Squad } from "../../types/types";
+import { Item, Squad } from "../../types/teamTypes";
 
 interface Props {
   updateSquadList: (squadList: Item[]) => void;

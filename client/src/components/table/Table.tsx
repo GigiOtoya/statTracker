@@ -1,4 +1,4 @@
-import { Player, Squad } from "../../types/types";
+import { Player, Squad } from "../../types/teamTypes";
 import { buttonTypes } from "../../types/utilityTypes";
 import { ReactNode, useState } from "react";
 import { Tooltip } from "../tooltip/Tooltip";

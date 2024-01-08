@@ -1,6 +1,6 @@
 import { ReactComponent as FieldSVG } from "../assets/Field-min.svg";
 import React, { useState } from "react";
-import { Player } from "../types/types";
+import { Player } from "../types/teamTypes";
 import { PlayerNodeSVG } from "./PlayerNodeSVG";
 
 interface FieldProps {

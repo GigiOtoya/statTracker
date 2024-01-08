@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Player } from "../types/types";
+import { Player } from "../types/teamTypes";
 import apiClient from "./Api";
 
 export const getAllPlayers = (): Promise<AxiosResponse<Player[]>> => {

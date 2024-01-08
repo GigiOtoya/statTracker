@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Player, defaultPlayer, playerData } from "../../types/types";
+import { Player, defaultPlayer, playerData } from "../../types/teamTypes";
 import { Slider } from "./Slider";
 import { Input } from "./Input";
 import { HorizontalSelect } from "./HorizontalSelect";

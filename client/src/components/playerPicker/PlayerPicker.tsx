@@ -1,5 +1,5 @@
 import { patchPlayers } from "../../api/PlayerApi";
-import { Player, UpdatePlayerProperties } from "../../types/types";
+import { Player, UpdatePlayerProperties } from "../../types/teamTypes";
 import { buttonTypes } from "../../types/utilityTypes";
 import { ActionButton } from "../actionButton/ActionButton";
 import { PlayerItem } from "./PlayerItem";

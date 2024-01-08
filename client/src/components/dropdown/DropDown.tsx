@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import arrow from "../../assets/arrow-down.svg";
-import { Item } from "../../types/types";
+import { Item } from "../../types/teamTypes";
 import "./DropDown.css";
 
 type DropDownProps = {

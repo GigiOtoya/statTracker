@@ -1,4 +1,4 @@
-import { Player, UpdatePlayerProperties } from "../../types/types";
+import { Player, UpdatePlayerProperties } from "../../types/teamTypes";
 import { Field } from "../Field";
 import { PlayerPicker } from "../playerPicker/PlayerPicker";
 import { DropDown } from "../dropdown/DropDown";
