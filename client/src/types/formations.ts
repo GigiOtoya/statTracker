@@ -1,4 +1,4 @@
-import { PositionsConfig, positionList } from "./positions";
+import { Positions, PositionsConfig, positionList } from "./positions";
 import { width, height } from "../utils/presets";
 import { Player } from "./teamTypes";
 
@@ -66,3 +66,10 @@ export const formations: formationsConfig = {
     players: {},
   },
 };
+
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+
+type Positions442 = WithRequired<
+  PositionsConfig,
+  "GK" | "LB" | "CB" | "RB" | "CM" | "LM" | "RM" | "ST"
+>;

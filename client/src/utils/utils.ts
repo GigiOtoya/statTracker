@@ -11,65 +11,57 @@ export const alternativePosition: Record<string, Positions[]> = {
   CF: ["ST", "CM"],
 };
 
-const getAlternativePosition = (position: Positions, formation: Formation): Positions => {
-  const positions = alternativePosition[position] ?? [];
-
-  for (const pos of positions) {
-    if (formation.positions[pos]) {
-      return pos;
-    }
-  }
-
-  return position;
+const positionInFormation = (position: Positions, formation: Formation): boolean => {
+  return position in formation.positions;
 };
 
-const isPositionAvailable = (position: Positions, formation: Formation): Boolean => {
+const positionIsValidated = (position: Positions, formation: Formation): boolean => {
+  return position in formation.players;
+};
+
+const positionIsVacant = (position: Positions, formation: Formation): boolean => {
   const positionList = formation.positions[position];
-  const playerList = formation.players[position];
 
   if (!positionList) {
     return false;
   }
 
-  if (!playerList) {
-    return true;
-  }
-
-  return playerList.length < position.length;
-};
-
-const positionIsValidated = (position: Positions, formation: Formation): Boolean => {
-  return position in formation.players;
-};
-
-const positionsAreFull = (position: Positions, formation: Formation): Boolean => {
-  const positionList = formation.positions[position];
-  const playerList = formation.players[position];
-
-  if (!positionList || !playerList) {
-    return false;
-  }
+  const playerList = formation.players[position] ?? [];
 
   return playerList.length < positionList.length;
+};
+
+const getAssignablePosition = (position: Positions, formation: Formation): Positions => {
+  if (!positionInFormation(position, formation)) {
+    const altPositions = alternativePosition[position] ?? [];
+
+    for (const pos of altPositions) {
+      // check if position exists in formation
+      const valid = positionInFormation(pos, formation);
+      // Assign position
+      const assignable = positionIsVacant(pos, formation);
+      if (valid && assignable) {
+        return pos;
+      }
+    }
+  }
+  // position is in formation, check if vacant
+  else if (positionIsVacant(position, formation)) {
+    return position;
+  }
+  // return random empty position
+  return position;
 };
 
 export const playersToPositions = (players: Player[], formationName: Formations): Formation => {
   const selectedFormation = formations[formationName];
 
   for (const player of players) {
-    const position = getAlternativePosition(player.position ?? "CM", selectedFormation);
-    const canPlace = isPositionAvailable(position, selectedFormation);
+    const position = getAssignablePosition(player.position ?? "CM", selectedFormation);
+    const playersInPosition = selectedFormation.players[position] ?? [];
 
-    // Create empty Player array if a player position is not yet mapped to position in formation
-    if (!positionIsValidated(position, selectedFormation)) {
-      selectedFormation.players[position] = [];
-    }
-
-    if (!positionsAreFull(position, selectedFormation)) {
-      selectedFormation.players[position]!.push(player);
-    } else {
-      // TODO
-    }
+    playersInPosition.push(player);
+    selectedFormation.players[position] = playersInPosition;
   }
 
   return selectedFormation;

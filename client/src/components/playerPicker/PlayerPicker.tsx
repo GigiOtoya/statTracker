@@ -4,6 +4,7 @@ import { buttonTypes } from "../../types/utilityTypes";
 import { ActionButton } from "../actionButton/ActionButton";
 import { PlayerItem } from "./PlayerItem";
 import "./PlayerPicker.css";
+
 interface PlayerPickerProps {
   starters: Player[];
   reserves: Player[];
