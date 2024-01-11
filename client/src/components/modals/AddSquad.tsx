@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { ModalContext } from "./Modal";
 import { useState } from "react";
 import { addSquad, getSquadList } from "../../api/SquadApi";
-import { Item, Squad } from "../../types/teamTypes";
+import { DropdownItem, Squad } from "../../types/teamTypes";
 
 interface Props {
-  updateSquadList: (squadList: Item[]) => void;
+  updateSquadList: (squadList: DropdownItem[]) => void;
 }
 
 export const AddSquad = ({ updateSquadList }: Props) => {

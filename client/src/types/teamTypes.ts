@@ -1,6 +1,6 @@
 import { Positions } from "./positions";
 import { Omit } from "./utilityTypes";
-export interface Item {
+export interface DropdownItem {
   id: number;
   name: string;
 }

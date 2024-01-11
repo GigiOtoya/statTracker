@@ -1,6 +1,6 @@
 import { formations, Formations, Formation } from "../types/formations";
 import { Player } from "../types/teamTypes";
-import { Positions } from "../types/positions";
+import { Positions, positionList } from "../types/positions";
 
 export const alternativePosition: Record<string, Positions[]> = {
   LW: ["LM"],
@@ -55,13 +55,32 @@ const getAssignablePosition = (position: Positions, formation: Formation): Posit
 
 export const playersToPositions = (players: Player[], formationName: Formations): Formation => {
   const selectedFormation = formations[formationName];
+  // const vacantPositions: Positions[] = Object.keys(selectedFormation.positions) as Positions[];
+  const vacant: Set<Positions> = new Set(Object.keys(selectedFormation.positions) as Positions[]);
+  const remainingPlayers: Player[] = [];
 
   for (const player of players) {
     const position = getAssignablePosition(player.position ?? "CM", selectedFormation);
     const playersInPosition = selectedFormation.players[position] ?? [];
 
-    playersInPosition.push(player);
-    selectedFormation.players[position] = playersInPosition;
+    if (!positionIsVacant(position, selectedFormation)) {
+      remainingPlayers.push(player);
+      vacant.delete(position);
+    } else {
+      playersInPosition.push(player);
+      selectedFormation.players[position] = playersInPosition;
+    }
+  }
+
+  let index = 0;
+  const remainingPositions: Positions[] = Array.from(vacant);
+  for (const player of remainingPlayers) {
+    const position = remainingPositions[index];
+    selectedFormation.players[position]?.push(player);
+
+    if (!positionIsVacant(position, selectedFormation)) {
+      index++;
+    }
   }
 
   return selectedFormation;

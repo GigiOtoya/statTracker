@@ -1,4 +1,4 @@
-import { Player, Item, UpdatePlayerProperties } from "../types/teamTypes";
+import { Player, DropdownItem, UpdatePlayerProperties } from "../types/teamTypes";
 import { buttonTypes } from "../types/utilityTypes";
 import { DropDown } from "./dropdown/DropDown";
 import { Table } from "./table/Table";
@@ -15,7 +15,7 @@ import { getSquadPlayers } from "../api/PlayerApi";
 import { RightPane } from "./rightPane/RightPane";
 
 export const SquadBuilder = () => {
-  const [squadList, setSquadList] = useState<Item[]>([]);
+  const [squadList, setSquadList] = useState<DropdownItem[]>([]);
   const [selectedSquad, setSelectedSquad] = useState<number>();
   const [players, setPlayers] = useState<Player[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -64,7 +64,7 @@ export const SquadBuilder = () => {
     });
   };
 
-  const updateSquadList = (items: Item[]) => {
+  const updateSquadList = (items: DropdownItem[]) => {
     setSquadList(items);
   };
 

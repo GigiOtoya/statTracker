@@ -1,10 +1,10 @@
 import { ReactNode, useState } from "react";
 import arrow from "../../assets/arrow-down.svg";
-import { Item } from "../../types/teamTypes";
+import { DropdownItem } from "../../types/teamTypes";
 import "./DropDown.css";
 
 type DropDownProps = {
-  items: Item[];
+  items: DropdownItem[];
   placeHolder?: String;
   children?: ReactNode;
   switchItem: (id: number) => void;
@@ -12,13 +12,13 @@ type DropDownProps = {
 
 export const DropDown = ({ items, placeHolder, switchItem, children }: DropDownProps) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<Item>();
+  const [selected, setSelected] = useState<DropdownItem>();
 
   const handleOnClick = () => {
     setVisible(!visible);
   };
 
-  const handleSelect = (item: Item) => {
+  const handleSelect = (item: DropdownItem) => {
     setSelected(item);
     switchItem(item.id);
     setVisible(!visible);
