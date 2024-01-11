@@ -1,6 +1,6 @@
 import { formations, Formations, Formation } from "../types/formations";
 import { Player } from "../types/teamTypes";
-import { Positions, positionList } from "../types/positions";
+import { Positions } from "../types/positions";
 
 export const alternativePosition: Record<string, Positions[]> = {
   LW: ["LM"],
@@ -11,7 +11,7 @@ export const alternativePosition: Record<string, Positions[]> = {
   CF: ["ST", "CM"],
 };
 
-const positionInFormation = (position: Positions, formation: Formation): boolean => {
+export const positionInFormation = (position: Positions, formation: Formation): boolean => {
   return position in formation.positions;
 };
 
@@ -19,7 +19,7 @@ const positionIsValidated = (position: Positions, formation: Formation): boolean
   return position in formation.players;
 };
 
-const positionIsVacant = (position: Positions, formation: Formation): boolean => {
+export const positionIsVacant = (position: Positions, formation: Formation): boolean => {
   const positionList = formation.positions[position];
 
   if (!positionList) {
@@ -31,7 +31,7 @@ const positionIsVacant = (position: Positions, formation: Formation): boolean =>
   return playerList.length < positionList.length;
 };
 
-const getAssignablePosition = (position: Positions, formation: Formation): Positions => {
+export const getAssignablePosition = (position: Positions, formation: Formation): Positions => {
   if (!positionInFormation(position, formation)) {
     const altPositions = alternativePosition[position] ?? [];
 

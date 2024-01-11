@@ -1,6 +1,7 @@
-import { Positions, PositionsConfig, positionList } from "./positions";
+import { Positions, PositionsConfig } from "./positions";
 import { width, height } from "../utils/presets";
 import { Player } from "./teamTypes";
+import { positionIsVacant } from "../utils/utils";
 
 export const formationList = ["4-4-2", "4-3-3"] as const;
 export type Formations = (typeof formationList)[number];
@@ -67,40 +68,27 @@ export const formations: formationsConfig = {
   },
 };
 
-type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+// type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
-type Positions442 = WithRequired<
-  PositionsConfig,
-  "GK" | "LB" | "CB" | "RB" | "CM" | "LM" | "RM" | "ST"
->;
+// type Positions442 = WithRequired<
+//   PositionsConfig,
+//   "GK" | "LB" | "CB" | "RB" | "CM" | "LM" | "RM" | "ST"
+// >;
 
-const vacantPositions: Positions[] = Object.keys(formations["4-4-2"].positions).filter(
-  (key) => formations["4-4-2"].positions[key as Positions]
-) as Positions[];
+// const vacantPositions: Positions[] = Object.keys(formations["4-4-2"].positions).filter(
+//   (key) => formations["4-4-2"].positions[key as Positions]
+// ) as Positions[];
 
 const initPlayers = (formationName: Formations) => {
-  const selectedFormation = formations[formationName];
   const formationPositions = formations[formationName].positions;
   const vacantPositions: Positions[] = Object.keys(formationPositions) as Positions[];
-
   const players: { [key in keyof PositionsConfig]: Player[] } = {};
 
   vacantPositions.forEach((key) => (players[key] = []));
 
-  // console.log(selectedFormation.players);
   return players;
-
-  // return vacantPositions;
 };
-
-console.log(vacantPositions);
 
 for (const key of formationList) {
   formations[key].players = initPlayers(key);
 }
-
-console.log(formations);
-
-const form = formations["4-3-3"];
-const vax: Set<Positions> = new Set(Object.keys(form.positions) as Positions[]);
-console.log(vax);
