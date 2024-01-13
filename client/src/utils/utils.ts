@@ -63,13 +63,24 @@ export const playersToPositions = (players: Player[], formationName: Formations)
     const position = getAssignablePosition(player.position ?? "CM", selectedFormation);
     const playersInPosition = selectedFormation.players[position] ?? [];
 
-    if (!positionIsVacant(position, selectedFormation)) {
-      remainingPlayers.push(player);
-      vacant.delete(position);
-    } else {
+    if (positionIsVacant(position, selectedFormation)) {
       playersInPosition.push(player);
       selectedFormation.players[position] = playersInPosition;
+
+      if (!positionIsVacant(position, selectedFormation)) {
+        vacant.delete(position);
+      }
+    } else {
+      remainingPlayers.push(player);
     }
+
+    // if (!positionIsVacant(position, selectedFormation)) {
+    //   remainingPlayers.push(player);
+    //   vacant.delete(position);
+    // } else {
+    //   playersInPosition.push(player);
+    //   selectedFormation.players[position] = playersInPosition;
+    // }
   }
 
   let index = 0;

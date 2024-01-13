@@ -1,7 +1,8 @@
 import { Positions, PositionsConfig } from "./positions";
 import { width, height } from "../utils/presets";
 import { Player } from "./teamTypes";
-import { positionIsVacant } from "../utils/utils";
+import mockdata from "../utils/MOCK_DATA.json";
+import { playersToPositions } from "../utils/utils";
 
 export const formationList = ["4-4-2", "4-3-3"] as const;
 export type Formations = (typeof formationList)[number];
@@ -92,3 +93,12 @@ const initPlayers = (formationName: Formations) => {
 for (const key of formationList) {
   formations[key].players = initPlayers(key);
 }
+
+// const players: Player[] = mockdata
+//   .filter((player) => player.starter)
+//   .map((player) => ({
+//     ...player,
+//     position: player.position as Positions,
+//   }));
+
+// console.log(playersToPositions(players, "4-4-2"));
