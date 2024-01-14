@@ -1,16 +1,31 @@
 import { ReactComponent as FieldSVG } from "../assets/Field-min.svg";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Player } from "../types/teamTypes";
-import { PlayerNodeSVG } from "./PlayerNodeSVG";
+import { PlayerNodeSVG } from "./playerNodeSVg/PlayerNodeSVG";
+import { playersToPositions } from "../utils/utils";
+import { Formations } from "../types/formations";
+import { Positions } from "../types/positions";
+import { width, height } from "../utils/presets";
+import { Point } from "../types/utilityTypes";
 
 interface FieldProps {
   players: Player[];
+  formationName: Formations;
 }
 
-export const Field = ({ players }: FieldProps) => {
-  const [svgSize, setSvgSize] = useState({ width: 100, height: 100 });
-  const [formation, setFormation] = useState<string>("");
-  const [viewbox, setViewBox] = useState({ minx: 0, miny: 0, width: 1600, height: 2560 });
+export const Field = ({ players, formationName }: FieldProps) => {
+  const viewbox = { minx: 0, miny: 0, width: width, height: height };
+
+  const formation = playersToPositions(players, formationName);
+  const positions = Object.keys(formation.positions) as Positions[];
+
+  const playerNodes = positions.flatMap((pos) =>
+    formation.players[pos]?.map((player, index) => {
+      const point: Point = formation.positions[pos]![index];
+      return <PlayerNodeSVG player={player} point={point} />;
+    })
+  );
+
   const [circle, setCircle] = useState<SVGCircleElement | null>();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -44,16 +59,7 @@ export const Field = ({ players }: FieldProps) => {
         onMouseUp={handleMouseUp}
       >
         <FieldSVG className="svg-field"></FieldSVG>
-        {players.map((player) => (
-          <PlayerNodeSVG player={player} />
-        ))}
-
-        <g>
-          <circle cx={300} cy={300} r={100} onMouseDown={handleMouseDown} />
-          <text x={300} y={300}>
-            sdfsdsdfsdf
-          </text>
-        </g>
+        {playerNodes}
       </svg>
     </div>
   );

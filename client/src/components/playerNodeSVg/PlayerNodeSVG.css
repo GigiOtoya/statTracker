@@ -1,0 +1,28 @@
+.player-circle {
+  fill: rgb(10, 49, 10);
+  stroke: rgb(0, 0, 0);
+  stroke-width: 8px;
+  cursor: grab;
+}
+
+.player-circle:active {
+  cursor: grabbing;
+}
+
+.player-circle-text {
+  fill: white;
+  font-size: 100px;
+  user-select: none;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.player-circle-bottom {
+  fill: white;
+  font-size: 38px;
+  user-select: none;
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}

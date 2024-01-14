@@ -1,4 +1,4 @@
-import { Formation, Formations, formations } from "../types/formations";
+import { formations } from "../types/formations";
 import { Positions, positionList } from "../types/positions";
 import { Player } from "../types/teamTypes";
 import mockdata from "../utils/MOCK_DATA.json";

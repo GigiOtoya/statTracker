@@ -1,4 +1,4 @@
-import { Coordinates } from "./utilityTypes";
+import { Point } from "./utilityTypes";
 
 export const positionList = [
   "GK",
@@ -16,5 +16,5 @@ export const positionList = [
 
 export type Positions = (typeof positionList)[number];
 export type PositionsConfig = {
-  [K in Positions]?: Coordinates[];
+  [K in Positions]?: Point[];
 };

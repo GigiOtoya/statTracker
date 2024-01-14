@@ -25,7 +25,7 @@ export const RightPane = ({ players, updatePlayerProperties }: RightPaneProps) =
   return (
     <>
       <DropDown items={items} placeHolder={"Formation"} switchItem={changeSelectedFormation} />
-      <Field players={starters} />
+      <Field players={starters} formationName={formation} />
       <PlayerPicker
         starters={starters}
         reserves={reserves}

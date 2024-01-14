@@ -15,6 +15,7 @@ import { getSquadPlayers } from "../api/PlayerApi";
 import { RightPane } from "./rightPane/RightPane";
 
 export const SquadBuilder = () => {
+  const storedSquad = Number(localStorage.getItem("squad"));
   const [squadList, setSquadList] = useState<DropdownItem[]>([]);
   const [selectedSquad, setSelectedSquad] = useState<number>();
   const [players, setPlayers] = useState<Player[]>([]);
@@ -38,6 +39,7 @@ export const SquadBuilder = () => {
           const players: Player[] = res.data;
           console.log(players);
           setPlayers(players);
+          localStorage.setItem("squad", selectedSquad.toString());
         })
         .catch((err) => {
           console.log(err);

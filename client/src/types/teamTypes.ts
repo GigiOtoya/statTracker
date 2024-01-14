@@ -1,5 +1,5 @@
 import { Positions } from "./positions";
-import { Omit } from "./utilityTypes";
+import { Omit, Point } from "./utilityTypes";
 export interface DropdownItem {
   id: number;
   name: string;
@@ -11,7 +11,7 @@ export interface Squad {
   players: Player[];
 }
 
-export type Player = {
+export interface Player {
   id?: number;
   number: number;
   firstName?: string;
@@ -25,7 +25,8 @@ export type Player = {
   dribbling?: number;
   passing?: number;
   vision?: number;
-};
+  point?: Point;
+}
 
 export type UpdatePlayerProperties = Partial<Omit<Player, "id">>;
 

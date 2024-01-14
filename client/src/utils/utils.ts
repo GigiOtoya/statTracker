@@ -1,14 +1,17 @@
 import { formations, Formations, Formation } from "../types/formations";
 import { Player } from "../types/teamTypes";
 import { Positions } from "../types/positions";
+import { cloneDeep } from "lodash";
 
 export const alternativePosition: Record<string, Positions[]> = {
   LW: ["LM"],
-  LM: ["LW"],
-  RW: ["RM", "CM"],
+  LM: ["LW", "CM"],
+  RW: ["RM"],
   RM: ["RW", "CM"],
-  ST: ["CF"],
+  ST: ["CF", "CM"],
   CF: ["ST", "CM"],
+  LB: ["RB", "CB"],
+  RB: ["LB", "CB"],
 };
 
 export const positionInFormation = (position: Positions, formation: Formation): boolean => {
@@ -54,7 +57,7 @@ export const getAssignablePosition = (position: Positions, formation: Formation)
 };
 
 export const playersToPositions = (players: Player[], formationName: Formations): Formation => {
-  const selectedFormation = formations[formationName];
+  const selectedFormation = cloneDeep(formations[formationName]);
   // const vacantPositions: Positions[] = Object.keys(selectedFormation.positions) as Positions[];
   const vacant: Set<Positions> = new Set(Object.keys(selectedFormation.positions) as Positions[]);
   const remainingPlayers: Player[] = [];
@@ -73,14 +76,6 @@ export const playersToPositions = (players: Player[], formationName: Formations)
     } else {
       remainingPlayers.push(player);
     }
-
-    // if (!positionIsVacant(position, selectedFormation)) {
-    //   remainingPlayers.push(player);
-    //   vacant.delete(position);
-    // } else {
-    //   playersInPosition.push(player);
-    //   selectedFormation.players[position] = playersInPosition;
-    // }
   }
 
   let index = 0;
@@ -96,3 +91,12 @@ export const playersToPositions = (players: Player[], formationName: Formations)
 
   return selectedFormation;
 };
+
+// const playerToPositions2 = (players: Player[], formationName: Formations) => {
+//   //clone formation object?
+//   const selectedFormation = formations[formationName];
+
+//   for (const player of players) {
+//     const position = getAssignablePosition(player.position ?? "CM", selectedFormation);
+//   }
+// };
