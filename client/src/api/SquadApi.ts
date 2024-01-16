@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Squad } from "../types/teamTypes";
+import { Squad, NewSquad } from "../types/teamTypes";
 import apiClient from "./Api";
 
 export const getAllSquads = (): Promise<AxiosResponse<Squad[]>> => {
@@ -18,6 +18,6 @@ export const getSquadNames = (): Promise<AxiosResponse<string[]>> => {
   return apiClient.get("/squads/names");
 };
 
-export const addSquad = (squad: Squad) => {
+export const addSquad = (squad: NewSquad) => {
   return apiClient.post("/squads", squad);
 };

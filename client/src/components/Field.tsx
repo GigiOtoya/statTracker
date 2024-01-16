@@ -1,5 +1,5 @@
 import { ReactComponent as FieldSVG } from "../assets/Field-min.svg";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Player } from "../types/teamTypes";
 import { PlayerNodeSVG } from "./playerNodeSVg/PlayerNodeSVG";
 import { playersToPositions } from "../utils/utils";

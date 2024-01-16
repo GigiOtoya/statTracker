@@ -1,15 +1,13 @@
 import { Positions } from "./positions";
 import { Omit, Point } from "./utilityTypes";
-export interface DropdownItem {
-  id: number;
-  name: string;
-}
 
 export interface Squad {
-  id?: number;
+  id: number;
   name: string;
   players: Player[];
 }
+
+export type NewSquad = Omit<Squad, "id">;
 
 export interface Player {
   id?: number;

@@ -1,4 +1,4 @@
-import { Player, DropdownItem, UpdatePlayerProperties } from "../types/teamTypes";
+import { Player, UpdatePlayerProperties, Squad } from "../types/teamTypes";
 import { buttonTypes } from "../types/utilityTypes";
 import { DropDown } from "./dropdown/DropDown";
 import { Table } from "./table/Table";
@@ -15,9 +15,8 @@ import { getSquadPlayers } from "../api/PlayerApi";
 import { RightPane } from "./rightPane/RightPane";
 
 export const SquadBuilder = () => {
-  const storedSquad = Number(localStorage.getItem("squad"));
-  const [squadList, setSquadList] = useState<DropdownItem[]>([]);
-  const [selectedSquad, setSelectedSquad] = useState<number>();
+  const [squadList, setSquadList] = useState<Squad[]>([]);
+  const [selectedSquad, setSelectedSquad] = useState<Squad>();
   const [players, setPlayers] = useState<Player[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode>();
@@ -26,6 +25,15 @@ export const SquadBuilder = () => {
     getSquadList()
       .then((res) => {
         setSquadList(res.data);
+        console.log(res.data);
+      })
+      .then(() => {
+        const storedSquad = localStorage.getItem("selectedSquad");
+        if (storedSquad) {
+          const squad: Squad = JSON.parse(storedSquad);
+          console.log(squad);
+          setSelectedSquad(squad);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -34,12 +42,11 @@ export const SquadBuilder = () => {
 
   useEffect(() => {
     if (selectedSquad) {
-      getSquadPlayers(selectedSquad)
+      getSquadPlayers(selectedSquad.id)
         .then((res) => {
           const players: Player[] = res.data;
           console.log(players);
           setPlayers(players);
-          localStorage.setItem("squad", selectedSquad.toString());
         })
         .catch((err) => {
           console.log(err);
@@ -47,8 +54,10 @@ export const SquadBuilder = () => {
     }
   }, [selectedSquad]);
 
-  const changeSelectedSquad = (id: number) => {
-    setSelectedSquad(id);
+  const changeSelectedSquad = (index: number) => {
+    const squad = squadList[index];
+    setSelectedSquad(squad);
+    localStorage.setItem("selectedSquad", JSON.stringify(squad));
   };
 
   const updateSquadPlayers = (playerList: Player[]) => {
@@ -66,11 +75,9 @@ export const SquadBuilder = () => {
     });
   };
 
-  const updateSquadList = (items: DropdownItem[]) => {
-    setSquadList(items);
+  const updateSquadList = (newSquadList: Squad[]) => {
+    setSquadList(newSquadList);
   };
-
-  const changeSelectedFormation = (id: number) => {};
 
   const toggleModal = (value: boolean, content?: ReactNode) => {
     if (content) {
@@ -82,7 +89,12 @@ export const SquadBuilder = () => {
   return (
     <SplitScreen>
       <>
-        <DropDown items={squadList} placeHolder="Select Squad" switchItem={changeSelectedSquad}>
+        <DropDown
+          items={squadList.map((s) => s.name)}
+          selected={selectedSquad?.name}
+          placeHolder="Select Squad"
+          switchItem={changeSelectedSquad}
+        >
           <ActionButton
             text={"Add New Squad"}
             icon={addIcon}

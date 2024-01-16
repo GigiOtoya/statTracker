@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { ModalContext } from "./Modal";
 import { useState } from "react";
 import { addSquad, getSquadList } from "../../api/SquadApi";
-import { DropdownItem, Squad } from "../../types/teamTypes";
+import { Squad, NewSquad } from "../../types/teamTypes";
 
 interface Props {
-  updateSquadList: (squadList: DropdownItem[]) => void;
+  updateSquadList: (squadList: Squad[]) => void;
 }
 
 export const AddSquad = ({ updateSquadList }: Props) => {
@@ -15,7 +15,7 @@ export const AddSquad = ({ updateSquadList }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const squad: Squad = { name, players: [] };
+    const squad: NewSquad = { name, players: [] };
     console.log(squad);
 
     await addSquad(squad)

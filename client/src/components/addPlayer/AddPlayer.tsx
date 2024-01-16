@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Player, defaultPlayer, playerData } from "../../types/teamTypes";
+import { Player, Squad, defaultPlayer, playerData } from "../../types/teamTypes";
 import { Slider } from "./Slider";
 import { Input } from "./Input";
 import { HorizontalSelect } from "./HorizontalSelect";
@@ -7,7 +7,7 @@ import "./AddPlayer.css";
 import { getSquadPlayers, addPlayer } from "../../api/PlayerApi";
 
 interface Props {
-  selectedSquad?: number;
+  selectedSquad?: Squad;
   updatePlayers: (playerList: Player[]) => void;
 }
 
@@ -27,13 +27,13 @@ export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
       return;
     }
 
-    await addPlayer(player, selectedSquad)
+    await addPlayer(player, selectedSquad.id)
       .then((res) => {
         console.log(res);
       })
       .catch((err) => console.log(err));
 
-    await getSquadPlayers(selectedSquad)
+    await getSquadPlayers(selectedSquad.id)
       .then((res) => {
         const players: Player[] = res.data;
         updatePlayers(players);

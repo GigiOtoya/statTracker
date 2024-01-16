@@ -1,8 +1,8 @@
-import { DropdownItem, Player, UpdatePlayerProperties } from "../../types/teamTypes";
+import { Player, UpdatePlayerProperties } from "../../types/teamTypes";
 import { Field } from "../Field";
 import { PlayerPicker } from "../playerPicker/PlayerPicker";
 import { DropDown } from "../dropdown/DropDown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Formations, formationList } from "../../types/formations";
 
 interface RightPaneProps {
@@ -13,18 +13,33 @@ interface RightPaneProps {
 export const RightPane = ({ players, updatePlayerProperties }: RightPaneProps) => {
   const starters = players.filter((player) => player.starter).sort((a, b) => a.number - b.number);
   const reserves = players.filter((player) => !player.starter).sort((a, b) => a.number - b.number);
-  const items: DropdownItem[] = formationList.map((formation, index) => {
-    return { id: index, name: formation };
-  });
-
+  const items: string[] = formationList.map((formation) => formation);
   const [formation, setFormation] = useState<Formations>("4-4-2");
 
-  const changeSelectedFormation = (id: number) => {
-    setFormation(formationList[id]);
+  useEffect(() => {
+    const storedFormation = localStorage.getItem("selectedFormation");
+    if (storedFormation) {
+      setFormation(JSON.parse(storedFormation));
+    }
+  }, []);
+
+  useEffect(() => {
+    const selectedFormation = JSON.stringify(formation);
+    localStorage.setItem("selectedFormation", selectedFormation);
+  }, [formation]);
+
+  const changeSelectedFormation = (index: number) => {
+    setFormation(formationList[index]);
   };
+
   return (
     <>
-      <DropDown items={items} placeHolder={"Formation"} switchItem={changeSelectedFormation} />
+      <DropDown
+        items={items}
+        selected={`Formation: ${formation}`}
+        placeHolder={"Formation"}
+        switchItem={changeSelectedFormation}
+      />
       <Field players={starters} formationName={formation} />
       <PlayerPicker
         starters={starters}

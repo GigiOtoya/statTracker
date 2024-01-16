@@ -19,7 +19,7 @@ import {
 interface TableProps {
   data: Player[];
   updateData: (playerList: Player[]) => void;
-  selectedSquad?: number;
+  selectedSquad?: Squad;
   children: ReactNode[];
 }
 export const Table = ({ data, children, selectedSquad, updateData }: TableProps) => {
