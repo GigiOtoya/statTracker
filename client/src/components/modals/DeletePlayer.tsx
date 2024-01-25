@@ -1,18 +1,17 @@
 import { useContext } from "react";
-import { MdWarning } from "react-icons/md";
-import { Squad } from "../../types/teamTypes";
 import { DialogModalContext } from "./DialogModal";
+import { MdWarning } from "react-icons/md";
+import { Player } from "../../types/teamTypes";
 
-interface DeleteSquadProps {
-  squad?: Squad;
+interface DeletePlayerProps {
+  player: Player;
+  squadName?: string;
 }
 
-export const DeleteSquad = ({ squad }: DeleteSquadProps) => {
+export const DeletePlayer = ({ player, squadName }: DeletePlayerProps) => {
   const modalContext = useContext(DialogModalContext);
 
   const handleOnClick = () => {
-    // delete api call
-
     modalContext?.handleOnClose();
   };
 
@@ -20,13 +19,17 @@ export const DeleteSquad = ({ squad }: DeleteSquadProps) => {
     <div className="modal-container">
       <h2 className="modal-header header-negative">
         <MdWarning />
-        Delete Team
+        Delete Player
       </h2>
       <div className="modal-body">
-        <p>Deleting a squad will delete the squad along with all its players.</p>
+        <p>
+          {`Delete player #${player.number}, ${player.firstName} ${player.lastName} from ${
+            squadName ?? "squad"
+          }?`}
+        </p>
       </div>
       <div className="modal-footer">
-        <button className="modal-btn btn-negative">Delete</button>
+        <button className="modal-btn btn-negative">Confirm</button>
         <button className="modal-btn btn-neutral" onClick={handleOnClick}>
           Cancel
         </button>

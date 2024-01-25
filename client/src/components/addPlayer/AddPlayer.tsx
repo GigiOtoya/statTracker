@@ -1,24 +1,25 @@
-import { useState } from "react";
-import { Player, Squad, defaultPlayer, playerData } from "../../types/teamTypes";
-import { Slider } from "./Slider";
-import { Input } from "./Input";
+import { useContext, useState } from "react";
+import { Player, Squad, playerData } from "../../types/teamTypes";
+import { Input, inputTextPresets, inputRangePresets, inputNumPresets } from "../input/Input";
 import { HorizontalSelect } from "./HorizontalSelect";
 import "./AddPlayer.css";
 import { getSquadPlayers, addPlayer } from "../../api/PlayerApi";
+import { AxiosError } from "axios";
+import { wait } from "../../utils/utils";
+import { validateInput } from "../../utils/validationUtils";
+import { DialogModalContext } from "../modals/DialogModal";
 
 interface Props {
   selectedSquad?: Squad;
   updatePlayers: (playerList: Player[]) => void;
+  player: Player;
+  editPlayer: (name: string, value: string | number) => void;
 }
 
-export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
-  const [player, setPlayer] = useState<Player>(defaultPlayer);
-
-  const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { name } = e.currentTarget;
-    const value = validateNumber(e.currentTarget.value);
-    updatePlayer(name, value);
-  };
+export const AddPlayer = ({ selectedSquad, updatePlayers, player, editPlayer }: Props) => {
+  const modalContext = useContext(DialogModalContext);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,129 +28,125 @@ export const AddPlayer = ({ selectedSquad, updatePlayers }: Props) => {
       return;
     }
 
-    await addPlayer(player, selectedSquad.id)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const addPlayerResponse = await addPlayer(player, selectedSquad.id);
+      const getPlayersResponse = await getSquadPlayers(selectedSquad.id);
+      const players: Player[] = getPlayersResponse.data;
+      updatePlayers(players);
+      setSuccess(addPlayerResponse.data);
 
-    await getSquadPlayers(selectedSquad.id)
-      .then((res) => {
-        const players: Player[] = res.data;
-        updatePlayers(players);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      await wait(1000);
+      handleClose();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data);
+      }
+    }
   };
 
-  const updatePlayer = (name: string, value: string | number) => {
-    setPlayer((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    console.log(player);
+  const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const { name } = e.currentTarget;
+    const value = validateInput(e.currentTarget);
+    editPlayer(name, value);
   };
 
-  const validateNumber = (num: number | string) => {
-    const value = Number(num);
-    if (!value) return num;
-    if (value > 99) return 99;
-    if (value < 1) return 1;
-    return value;
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.currentTarget.type === "number") {
+      ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
+    }
+  };
+
+  const handleClose = () => {
+    modalContext?.handleOnClose();
+  };
+
+  const textPresets = { ...inputTextPresets, onChange: handleOnChange };
+  const rangePresets = { ...inputRangePresets, onChange: handleOnChange };
+  const numPresets = {
+    ...inputNumPresets,
+    onChange: handleOnChange,
+    onKeyDown: handleKeyDown,
   };
 
   return (
-    <form className="player-data-form" onSubmit={(e) => handleSubmit(e)}>
-      <div className="player-data-header">
-        <h2>New Player</h2>
-      </div>
+    <form className="modal-container" onSubmit={(e) => handleSubmit(e)}>
+      <h2 className="modal-header header-positive">New Player</h2>
       <div className="split-2">
         <div className="player-data-name">
           <Input
             label="First Name"
-            type="text"
             name={playerData.firstName}
+            placeholder="First Name..."
             value={player.firstName}
-            updatePlayer={updatePlayer}
+            {...textPresets}
           ></Input>
         </div>
         <div className="player-data-name">
           <Input
             label="Last Name"
-            type="text"
             name={playerData.lastName}
+            placeholder="Last Name..."
             value={player.lastName}
-            updatePlayer={updatePlayer}
+            {...textPresets}
           ></Input>
         </div>
       </div>
       <div className="split-3">
         <div className="split-3-data">
-          <Input
-            label="Number"
-            type="number"
-            name={playerData.number}
-            value={player.number}
-            updatePlayer={updatePlayer}
-          />
+          <Input label="Number" name={playerData.number} value={player.number} {...numPresets} />
           <HorizontalSelect
             label="Position"
             name={playerData.position}
             value={player.position}
-            updatePlayer={updatePlayer}
+            onChange={editPlayer}
           />
-          <Slider
-            label="Vision"
-            name={playerData.vision}
-            value={player.vision}
-            updatePlayer={updatePlayer}
-          />
+          <Input label="Vision" name={playerData.vision} value={player.vision} {...rangePresets} />
         </div>
         <div className="split-3-data">
-          <Slider
-            label="Speed"
-            name={playerData.speed}
-            value={player.speed}
-            updatePlayer={updatePlayer}
-          />
-          <Slider
+          <Input label="Speed" name={playerData.speed} value={player.speed} {...rangePresets} />
+          <Input
             label="Passing"
             name={playerData.passing}
             value={player.passing}
-            updatePlayer={updatePlayer}
+            {...rangePresets}
           />
-          <Slider
+          <Input
             label="Shooting"
             name={playerData.shooting}
             value={player.shooting}
-            updatePlayer={updatePlayer}
+            {...rangePresets}
           />
         </div>
         <div className="split-3-data">
-          <Slider
+          <Input
             label="Defending"
             name={playerData.defending}
             value={player.defending}
-            updatePlayer={updatePlayer}
+            {...rangePresets}
           />
-          <Slider
+          <Input
             label="Dribbling"
             name={playerData.dribbling}
             value={player.dribbling}
-            updatePlayer={updatePlayer}
+            {...rangePresets}
           />
-          <Slider
+          <Input
             label="Physical"
             name={playerData.physical}
             value={player.physical}
-            updatePlayer={updatePlayer}
+            {...rangePresets}
           />
         </div>
       </div>
       <div className="player-data-footer">
-        <button className="action-btn btn-positive" type="submit">
-          Submit Player
+        <p className="error">{error && error}</p>
+      </div>
+      <div className="modal-footer">
+        <button className="modal-btn btn-positive" type="submit">
+          Submit
+        </button>
+        <button className="modal-btn btn-neutral" type="button" onClick={handleClose}>
+          Cancel
         </button>
       </div>
     </form>

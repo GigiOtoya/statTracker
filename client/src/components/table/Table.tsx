@@ -1,11 +1,12 @@
-import { Player, Squad } from "../../types/teamTypes";
+import { Player, Squad, defaultPlayer } from "../../types/teamTypes";
 import { buttonTypes } from "../../types/utilityTypes";
 import { ReactNode, useState } from "react";
 import { Tooltip } from "../tooltip/Tooltip";
 import { ActionButton } from "../actionButton/ActionButton";
+import { MdDeleteForever, MdOutlineEdit } from "react-icons/md";
 import { AddPlayer } from "../addPlayer/AddPlayer";
+import { DialogModal } from "../modals/DialogModal";
 import addIcon from "../../assets/add.svg";
-
 import "./Table.css";
 import {
   createColumnHelper,
@@ -15,6 +16,7 @@ import {
   flexRender,
   SortingState,
 } from "@tanstack/react-table";
+import { DeletePlayer } from "../modals/DeletePlayer";
 
 interface TableProps {
   data: Player[];
@@ -22,6 +24,7 @@ interface TableProps {
   selectedSquad?: Squad;
   children: ReactNode[];
 }
+
 export const Table = ({ data, children, selectedSquad, updateData }: TableProps) => {
   const [left, right] = children;
 
@@ -103,6 +106,24 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
         }),
       ],
     }),
+    columnHelper.display({
+      id: "actions",
+      enableHiding: true,
+      cell: (props) => {
+        return (
+          <span className="testtest">
+            <MdOutlineEdit
+              className="action-icon edit-icon"
+              onClick={() => handleOnClickEdit(props.row.original)}
+            />
+            <MdDeleteForever
+              className="action-icon trash-icon"
+              onClick={() => handleOnClickDelete(props.row.original)}
+            />
+          </span>
+        );
+      },
+    }),
   ];
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -115,70 +136,132 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    onRowSelectionChange: setRowSelection,
   });
 
-  const [playerEdit, setPlayerEdit] = useState<boolean>(false);
+  type modalAction = "NEW" | "EDIT" | "DELETE";
 
-  const handleToggleEdit = () => {
-    setPlayerEdit(!playerEdit);
+  const [selectedPlayer, setSelectedPlayer] = useState<Player>(defaultPlayer);
+  const [showModal, setShowModal] = useState(false);
+  const [action, setAction] = useState<modalAction>("NEW");
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+    console.log(selectedPlayer);
+  };
+
+  const handleRowClick = (player: Player) => {
+    console.log("row clicked test...");
+  };
+
+  const handleOnClickNew = () => {
+    setAction("NEW");
+    setSelectedPlayer(defaultPlayer);
+    setShowModal(true);
+  };
+
+  const handleOnClickEdit = (player: Player) => {
+    setAction("EDIT");
+    const playerToEdit = { ...player };
+    setSelectedPlayer(playerToEdit);
+    setShowModal(true);
+  };
+
+  const handleOnClickDelete = (player: Player) => {
+    setAction("DELETE");
+    const playerToDelete = { ...player };
+    setSelectedPlayer(playerToDelete);
+    setShowModal(true);
+  };
+
+  const editPlayer = (name: string, value: string | number) => {
+    setSelectedPlayer((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const maxPlayers = 25;
+  const canAdd = selectedSquad && data.length < maxPlayers;
+  const actionProps = {
+    text: "New Player",
+    icon: addIcon,
+    type: buttonTypes[0],
+    fn: handleOnClickNew,
   };
 
   return (
-    <div className="table-container">
-      <div className="table-header">
-        <div className="table-header-left">Manage Squad</div>
-        <div className="table-header-right">
-          <div className="table-header-right-item">{left}</div>
-          <div className="table-header-right-item">
-            {selectedSquad && (
-              <ActionButton
-                text={playerEdit ? "Cancel Add Player" : "Add New Player"}
-                icon={playerEdit ? "" : addIcon}
-                type={buttonTypes[0]}
-                fn={handleToggleEdit}
-              />
+    <>
+      {showModal && (
+        <DialogModal visible={showModal} onClose={toggleModal}>
+          {action === "NEW" && (
+            <AddPlayer updatePlayers={updateData} player={selectedPlayer} editPlayer={editPlayer} />
+          )}
+          {action === "EDIT" && (
+            <AddPlayer
+              updatePlayers={updateData}
+              player={selectedPlayer}
+              editPlayer={editPlayer}
+              selectedSquad={selectedSquad}
+            />
+          )}
+          {action === "DELETE" && (
+            <DeletePlayer player={selectedPlayer} squadName={selectedSquad?.name} />
+          )}
+        </DialogModal>
+      )}
+      <div className="table-container">
+        <div className="table-header">
+          <div className="table-header-left">
+            Manage Players: {data.length ? `${data.length} / ${maxPlayers}` : ""}
+          </div>
+          <div className="table-header-right">
+            <div className="table-header-right-item">{left}</div>
+            {canAdd && (
+              <div className="table-header-right-item">
+                <ActionButton {...actionProps} />
+              </div>
             )}
           </div>
         </div>
+        <table>
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <div
+                        {...{
+                          className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
+                          onClick: header.column.getToggleSortingHandler(),
+                        }}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: " 🔼",
+                          desc: " 🔽",
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id} onClick={() => handleRowClick(row.original)}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} data-label={cell.column.id !== "actions" ? cell.column.id : ""}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      {playerEdit && <AddPlayer selectedSquad={selectedSquad} updatePlayers={updateData} />}
-      <table>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} colSpan={header.colSpan}>
-                  {header.isPlaceholder ? null : (
-                    <div
-                      {...{
-                        className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
-                        onClick: header.column.getToggleSortingHandler(),
-                      }}
-                    >
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                      {{
-                        asc: " 🔼",
-                        desc: " 🔽",
-                      }[header.column.getIsSorted() as string] ?? null}
-                    </div>
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} data-label={cell.column.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    </>
   );
 };

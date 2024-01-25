@@ -4,7 +4,6 @@ import { Omit, Point } from "./utilityTypes";
 export interface Squad {
   id: number;
   name: string;
-  players: Player[];
 }
 
 export type NewSquad = Omit<Squad, "id">;
@@ -23,7 +22,6 @@ export interface Player {
   dribbling?: number;
   passing?: number;
   vision?: number;
-  point?: Point;
 }
 
 export type UpdatePlayerProperties = Partial<Omit<Player, "id">>;

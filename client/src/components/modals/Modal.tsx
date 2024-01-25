@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useEffect, useRef } from "react";
 import "./Modal.css";
+
 interface modalProps {
   visible: boolean;
   setVisible: (value: boolean) => void;
@@ -7,6 +8,7 @@ interface modalProps {
 }
 
 interface modalContextType {
+  modalRef: React.RefObject<HTMLDialogElement>;
   closeModal: () => void;
 }
 
@@ -28,10 +30,16 @@ export const Modal = ({ visible, setVisible, children }: modalProps) => {
     setVisible(false);
   };
 
+  const handleKey = (e: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+    }
+  };
+
   return (
-    <ModalContext.Provider value={{ closeModal }}>
-      <dialog ref={modalRef} className="modal" onClose={closeModal}>
-        {children}
+    <ModalContext.Provider value={{ modalRef, closeModal }}>
+      <dialog ref={modalRef} className="modal" onClose={closeModal} onKeyDown={handleKey}>
+        {visible && children}
       </dialog>
     </ModalContext.Provider>
   );

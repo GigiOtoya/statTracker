@@ -3,6 +3,10 @@ import { Player } from "../types/teamTypes";
 import { Positions } from "../types/positions";
 import { cloneDeep } from "lodash";
 
+export const wait = (ms: number) => {
+  return new Promise((res) => setTimeout(res, ms));
+};
+
 export const alternativePosition: Record<string, Positions[]> = {
   LW: ["LM"],
   LM: ["LW", "CM"],
@@ -91,12 +95,3 @@ export const playersToPositions = (players: Player[], formationName: Formations)
 
   return selectedFormation;
 };
-
-// const playerToPositions2 = (players: Player[], formationName: Formations) => {
-//   //clone formation object?
-//   const selectedFormation = formations[formationName];
-
-//   for (const player of players) {
-//     const position = getAssignablePosition(player.position ?? "CM", selectedFormation);
-//   }
-// };

@@ -49,6 +49,7 @@ td {
 
 tbody tr {
   padding-block: 8px;
+  cursor: default;
 }
 
 tbody tr:nth-child(odd) {
@@ -57,6 +58,10 @@ tbody tr:nth-child(odd) {
 
 tbody tr:nth-child(even) {
   background-color: #171a1f;
+}
+
+tbody tr:hover {
+  background-color: rgb(60, 72, 182);
 }
 
 @media screen and (max-width: 680px) {
@@ -88,4 +93,14 @@ tbody tr:nth-child(even) {
     padding-left: 10px;
     padding-right: 100px;
   }
+}
+
+.testtest {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.trash-icon {
+  fill: rgb(206, 54, 54);
 }

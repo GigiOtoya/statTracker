@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import arrow from "../../assets/arrow-down.svg";
+import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import "./DropDown.css";
 
 type DropDownProps = {
@@ -26,7 +26,11 @@ export const DropDown = ({ items, selected, placeHolder, switchItem, children }:
     <div className="dropdown-container">
       <div className="dropdown-header">
         <span className="dropdown-header-arrow" onClick={handleOnClick}>
-          <img src={arrow} alt="arrow" width={20} />
+          {visible ? (
+            <MdKeyboardArrowDown size={50} fill="white" />
+          ) : (
+            <MdKeyboardArrowRight size={50} fill="white" />
+          )}
         </span>
         <div className="dropdown-header-focal">
           <div className="dropdown-header-focal-item">{selected ?? placeHolder}</div>

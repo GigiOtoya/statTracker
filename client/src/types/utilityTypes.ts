@@ -5,5 +5,5 @@ export type Point = {
   y: number;
 };
 
-export const buttonTypes = ["btn-positive", "btn-negative"];
+export const buttonTypes = ["btn-positive", "btn-negative", "btn-neutral"] as const;
 export type ButtonType = (typeof buttonTypes)[number];

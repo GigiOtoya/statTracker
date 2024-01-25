@@ -18,6 +18,10 @@ export const getSquadNames = (): Promise<AxiosResponse<string[]>> => {
   return apiClient.get("/squads/names");
 };
 
-export const addSquad = (squad: NewSquad) => {
-  return apiClient.post("/squads", squad);
+export const addSquad = (newSquad: NewSquad): Promise<AxiosResponse> => {
+  return apiClient.post("/squads", newSquad);
+};
+
+export const editSquad = (id: number, newSquad: NewSquad): Promise<AxiosResponse> => {
+  return apiClient.put(`/squads/id/${id}`, newSquad);
 };

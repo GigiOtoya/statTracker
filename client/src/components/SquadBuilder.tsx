@@ -4,22 +4,22 @@ import { DropDown } from "./dropdown/DropDown";
 import { Table } from "./table/Table";
 import { SplitScreen } from "../Layouts/SplitScreen";
 import { ActionButton } from "./actionButton/ActionButton";
-import { Modal } from "./modals/Modal";
 import { AddSquad } from "./modals/AddSquad";
 import { DeleteSquad } from "./modals/DeleteSquad";
 import addIcon from "../assets/add.svg";
 import deleteIcon from "../assets/delete.svg";
-import { useEffect, useState, ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { getSquadList } from "../api/SquadApi";
 import { getSquadPlayers } from "../api/PlayerApi";
 import { RightPane } from "./rightPane/RightPane";
+import { MdOutlineEdit } from "react-icons/md";
+import { DialogModal } from "./modals/DialogModal";
 
 export const SquadBuilder = () => {
   const [squadList, setSquadList] = useState<Squad[]>([]);
   const [selectedSquad, setSelectedSquad] = useState<Squad>();
   const [players, setPlayers] = useState<Player[]>([]);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<ReactNode>();
+  const [modal, setModal] = useState<ReactNode>();
 
   useEffect(() => {
     getSquadList()
@@ -42,6 +42,8 @@ export const SquadBuilder = () => {
 
   useEffect(() => {
     if (selectedSquad) {
+      localStorage.setItem("selectedSquad", JSON.stringify(selectedSquad));
+
       getSquadPlayers(selectedSquad.id)
         .then((res) => {
           const players: Player[] = res.data;
@@ -54,10 +56,18 @@ export const SquadBuilder = () => {
     }
   }, [selectedSquad]);
 
+  const updateSquadName = (name: string) => {
+    setSelectedSquad((prevSquad) => {
+      if (!prevSquad) {
+        return prevSquad;
+      }
+      return { ...prevSquad, name: name };
+    });
+  };
+
   const changeSelectedSquad = (index: number) => {
     const squad = squadList[index];
     setSelectedSquad(squad);
-    localStorage.setItem("selectedSquad", JSON.stringify(squad));
   };
 
   const updateSquadPlayers = (playerList: Player[]) => {
@@ -79,45 +89,49 @@ export const SquadBuilder = () => {
     setSquadList(newSquadList);
   };
 
-  const toggleModal = (value: boolean, content?: ReactNode) => {
-    if (content) {
-      setModalContent(content);
-    }
-    setModalVisible(value);
+  const editModal = () => {
+    setModal(
+      <AddSquad squad={selectedSquad} update={updateSquadName} updateList={updateSquadList} />
+    );
+  };
+
+  const newModal = () => {
+    setModal(<AddSquad update={updateSquadName} updateList={updateSquadList} />);
+  };
+
+  const deleteModal = () => {
+    setModal(<DeleteSquad squad={selectedSquad} />);
+  };
+
+  const hideModal = () => {
+    setModal(null);
+  };
+
+  const isVisible = () => {
+    return modal ? true : false;
   };
 
   return (
     <SplitScreen>
       <>
+        {isVisible() && (
+          <DialogModal visible={isVisible()} onClose={hideModal}>
+            {modal}
+          </DialogModal>
+        )}
         <DropDown
           items={squadList.map((s) => s.name)}
           selected={selectedSquad?.name}
           placeHolder="Select Squad"
           switchItem={changeSelectedSquad}
         >
-          <ActionButton
-            text={"Add New Squad"}
-            icon={addIcon}
-            type={buttonTypes[0]}
-            fn={(value) => toggleModal(value, <AddSquad updateSquadList={updateSquadList} />)}
-          />
+          <MdOutlineEdit className="action-icon" onClick={editModal} />
+          <ActionButton text={"New Squad"} icon={addIcon} type={buttonTypes[0]} fn={newModal} />
         </DropDown>
-        <Modal visible={modalVisible} setVisible={toggleModal}>
-          {modalContent}
-        </Modal>
+
         <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad}>
-          <ActionButton
-            text={"Delete Squad"}
-            icon={deleteIcon}
-            type={buttonTypes[1]}
-            fn={(value) => toggleModal(value, <DeleteSquad />)}
-          />
-          <ActionButton
-            text={"Add New Squad"}
-            icon={addIcon}
-            type={buttonTypes[0]}
-            fn={(value) => toggleModal(value, <AddSquad updateSquadList={updateSquadList} />)}
-          />
+          <ActionButton {...deleteProps} fn={deleteModal} />
+          <ActionButton text={"Add New Squad"} icon={addIcon} type={buttonTypes[0]} fn={() => {}} />
         </Table>
       </>
       <>
@@ -126,3 +140,5 @@ export const SquadBuilder = () => {
     </SplitScreen>
   );
 };
+
+const deleteProps = { text: "Delete Squad", icon: deleteIcon, type: buttonTypes[1] };
