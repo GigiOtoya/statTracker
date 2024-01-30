@@ -4,13 +4,14 @@ import { ActionButton } from "../actionButton/ActionButton";
 import { PlayerItem } from "./PlayerItem";
 import "./PlayerPicker.css";
 
-interface PlayerPickerProps {
+interface Props {
   starters: Player[];
   reserves: Player[];
+  saveLineUp: (numbers: number[]) => void;
   updatePlayerProperties: (playerId: number, updatedProperties: MutablePlayerProperties) => void;
 }
 
-export const PlayerPicker = ({ starters, reserves, updatePlayerProperties }: PlayerPickerProps) => {
+export const PlayerPicker = ({ starters, reserves, saveLineUp, updatePlayerProperties }: Props) => {
   const maxStarters = 11;
   const maxReserves = 25;
 
@@ -25,8 +26,13 @@ export const PlayerPicker = ({ starters, reserves, updatePlayerProperties }: Pla
     }
   };
 
-  const handleSaveLineUp = () => {
-    // patchPlayers
+  const handleOnClick = () => {
+    if (!starters.length) {
+      return;
+    }
+
+    const starterNumbers: number[] = starters.map((player) => player.number);
+    saveLineUp(starterNumbers);
   };
 
   return (
@@ -48,7 +54,7 @@ export const PlayerPicker = ({ starters, reserves, updatePlayerProperties }: Pla
         </div>
       </div>
       <div>
-        <ActionButton text="Save Line-Up" type={buttonTypes[0]} fn={() => {}} />
+        <ActionButton text="Save Line-Up" type={buttonTypes[0]} fn={handleOnClick} />
       </div>
     </div>
   );

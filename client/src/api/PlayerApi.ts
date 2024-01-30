@@ -14,8 +14,8 @@ export const addPlayer = (player: Player, squadId: number): Promise<AxiosRespons
   return apiClient.post("/players", player, { params: { squadId } });
 };
 
-export const patchPlayers = (players: Player[]): Promise<AxiosResponse> => {
-  return apiClient.post("/players", players);
+export const editStarters = (playerNumbers: number[], squadId: number): Promise<AxiosResponse> => {
+  return apiClient.put(`/players/squad/${squadId}`, playerNumbers, { params: { squadId } });
 };
 
 export const editPlayer = (player: Player): Promise<AxiosResponse> => {

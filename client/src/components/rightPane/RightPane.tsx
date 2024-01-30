@@ -1,16 +1,18 @@
-import { Player, MutablePlayerProperties } from "../../types/teamTypes";
+import { Player, MutablePlayerProperties, Squad } from "../../types/teamTypes";
 import { Field } from "../Field";
 import { PlayerPicker } from "../playerPicker/PlayerPicker";
 import { DropDown } from "../dropdown/DropDown";
 import { useEffect, useState } from "react";
 import { Formations, formationList } from "../../types/formations";
+import { editStarters } from "../../api/PlayerApi";
 
 interface RightPaneProps {
+  selectedSquad?: Squad;
   players: Player[];
   updatePlayerProperties: (playerId: number, updatedProperties: MutablePlayerProperties) => void;
 }
 
-export const RightPane = ({ players, updatePlayerProperties }: RightPaneProps) => {
+export const RightPane = ({ selectedSquad, players, updatePlayerProperties }: RightPaneProps) => {
   const starters = players.filter((player) => player.starter).sort((a, b) => a.number - b.number);
   const reserves = players.filter((player) => !player.starter).sort((a, b) => a.number - b.number);
   const items: string[] = formationList.map((formation) => formation);
@@ -32,6 +34,12 @@ export const RightPane = ({ players, updatePlayerProperties }: RightPaneProps) =
     setFormation(formationList[index]);
   };
 
+  const saveLineUp = async (numbers: number[]) => {
+    if (selectedSquad) {
+      await editStarters(numbers, selectedSquad.id);
+    }
+  };
+
   return (
     <>
       <DropDown
@@ -45,6 +53,7 @@ export const RightPane = ({ players, updatePlayerProperties }: RightPaneProps) =
         starters={starters}
         reserves={reserves}
         updatePlayerProperties={updatePlayerProperties}
+        saveLineUp={saveLineUp}
       />
     </>
   );

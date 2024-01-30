@@ -8,7 +8,6 @@ interface buttonProps {
   icon?: string;
   // icon?: ReactNode;
   type: ButtonType;
-  // fn: (value: boolean) => void | (() => void);
   fn: () => void;
 }
 

@@ -140,7 +140,11 @@ export const SquadBuilder = () => {
         <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad} />
       </>
       <>
-        <RightPane players={players} updatePlayerProperties={updatePlayerProperties} />
+        <RightPane
+          selectedSquad={selectedSquad}
+          players={players}
+          updatePlayerProperties={updatePlayerProperties}
+        />
       </>
     </SplitScreen>
   );
