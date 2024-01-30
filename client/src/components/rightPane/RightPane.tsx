@@ -1,4 +1,4 @@
-import { Player, UpdatePlayerProperties } from "../../types/teamTypes";
+import { Player, MutablePlayerProperties } from "../../types/teamTypes";
 import { Field } from "../Field";
 import { PlayerPicker } from "../playerPicker/PlayerPicker";
 import { DropDown } from "../dropdown/DropDown";
@@ -7,7 +7,7 @@ import { Formations, formationList } from "../../types/formations";
 
 interface RightPaneProps {
   players: Player[];
-  updatePlayerProperties: (playerId: number, updatedProperties: UpdatePlayerProperties) => void;
+  updatePlayerProperties: (playerId: number, updatedProperties: MutablePlayerProperties) => void;
 }
 
 export const RightPane = ({ players, updatePlayerProperties }: RightPaneProps) => {

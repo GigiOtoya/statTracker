@@ -25,3 +25,7 @@ export const addSquad = (newSquad: NewSquad): Promise<AxiosResponse> => {
 export const editSquad = (id: number, newSquad: NewSquad): Promise<AxiosResponse> => {
   return apiClient.put(`/squads/id/${id}`, newSquad);
 };
+
+export const deleteSquad = (id: number): Promise<AxiosResponse> => {
+  return apiClient.delete(`/squads/id/${id}`);
+};

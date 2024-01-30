@@ -1,6 +1,6 @@
 import { Player, Squad, defaultPlayer } from "../../types/teamTypes";
 import { buttonTypes } from "../../types/utilityTypes";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useMemo } from "react";
 import { Tooltip } from "../tooltip/Tooltip";
 import { ActionButton } from "../actionButton/ActionButton";
 import { MdDeleteForever, MdOutlineEdit } from "react-icons/md";
@@ -22,109 +22,109 @@ interface TableProps {
   data: Player[];
   updateData: (playerList: Player[]) => void;
   selectedSquad?: Squad;
-  children: ReactNode[];
 }
 
-export const Table = ({ data, children, selectedSquad, updateData }: TableProps) => {
-  const [left, right] = children;
+export const Table = ({ data, selectedSquad, updateData }: TableProps) => {
+  const columnHelper = useMemo(() => createColumnHelper<Player>(), []);
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor("number", {
+        id: "Number",
+        header: "#",
+        cell: (info) => info.renderValue(),
+      }),
 
-  const columnHelper = createColumnHelper<Player>();
-  const columns = [
-    columnHelper.accessor("number", {
-      id: "Number",
-      header: "#",
-      cell: (info) => info.renderValue(),
-    }),
+      columnHelper.accessor("position", {
+        id: "Position",
+        header: () => <Tooltip text={"POS"} tooltipText={"Position"} />,
+        cell: (info) => info.renderValue(),
+        enableSorting: false,
+      }),
 
-    columnHelper.accessor("position", {
-      id: "Position",
-      header: () => <Tooltip text={"POS"} tooltipText={"Position"} />,
-      cell: (info) => info.renderValue(),
-      enableSorting: false,
-    }),
+      columnHelper.group({
+        header: "Name",
+        columns: [
+          columnHelper.accessor("firstName", {
+            id: "First Name",
+            header: () => "First",
+            cell: (info) => info.renderValue(),
+          }),
+          columnHelper.accessor("lastName", {
+            id: "Last Name",
+            header: () => "Last",
+            cell: (info) => info.renderValue(),
+          }),
+        ],
+      }),
 
-    columnHelper.group({
-      header: "Name",
-      columns: [
-        columnHelper.accessor("firstName", {
-          id: "First Name",
-          header: () => "First",
-          cell: (info) => info.renderValue(),
-        }),
-        columnHelper.accessor("lastName", {
-          id: "Last Name",
-          header: () => "Last",
-          cell: (info) => info.renderValue(),
-        }),
-      ],
-    }),
-
-    columnHelper.group({
-      header: "Attributes",
-      columns: [
-        columnHelper.accessor("speed", {
-          id: "Speed",
-          header: () => <Tooltip text={"SPD"} tooltipText={"Speed"} />,
-          cell: (info) => info.renderValue(),
-          enableSorting: false,
-        }),
-        columnHelper.accessor("passing", {
-          id: "Passing",
-          header: () => <Tooltip text={"PAS"} tooltipText={"Passing"} />,
-          cell: (info) => info.renderValue(),
-          enableSorting: false,
-        }),
-        columnHelper.accessor("shooting", {
-          id: "Shooting",
-          header: () => <Tooltip text={"SHO"} tooltipText={"Shooting"} />,
-          cell: (info) => info.renderValue(),
-          enableSorting: false,
-        }),
-        columnHelper.accessor("defending", {
-          id: "Defending",
-          header: () => <Tooltip text={"DEF"} tooltipText={"Defending"} />,
-          cell: (info) => info.renderValue(),
-          enableSorting: false,
-        }),
-        columnHelper.accessor("dribbling", {
-          id: "Dribbling",
-          header: () => <Tooltip text={"DRB"} tooltipText={"Dribbling"} />,
-          cell: (info) => info.renderValue(),
-          enableSorting: false,
-        }),
-        columnHelper.accessor("physical", {
-          id: "Physical",
-          header: () => <Tooltip text={"PHY"} tooltipText={"Physical"} />,
-          cell: (info) => info.renderValue(),
-          enableSorting: false,
-        }),
-        columnHelper.accessor("vision", {
-          id: "Vision",
-          header: () => <Tooltip text={"VIS"} tooltipText={"Vision"} />,
-          cell: (info) => info.renderValue(),
-          enableSorting: false,
-        }),
-      ],
-    }),
-    columnHelper.display({
-      id: "actions",
-      enableHiding: true,
-      cell: (props) => {
-        return (
-          <span className="testtest">
-            <MdOutlineEdit
-              className="action-icon edit-icon"
-              onClick={() => handleOnClickEdit(props.row.original)}
-            />
-            <MdDeleteForever
-              className="action-icon trash-icon"
-              onClick={() => handleOnClickDelete(props.row.original)}
-            />
-          </span>
-        );
-      },
-    }),
-  ];
+      columnHelper.group({
+        header: "Attributes",
+        columns: [
+          columnHelper.accessor("speed", {
+            id: "Speed",
+            header: () => <Tooltip text={"SPD"} tooltipText={"Speed"} />,
+            cell: (info) => info.renderValue(),
+            enableSorting: false,
+          }),
+          columnHelper.accessor("passing", {
+            id: "Passing",
+            header: () => <Tooltip text={"PAS"} tooltipText={"Passing"} />,
+            cell: (info) => info.renderValue(),
+            enableSorting: false,
+          }),
+          columnHelper.accessor("shooting", {
+            id: "Shooting",
+            header: () => <Tooltip text={"SHO"} tooltipText={"Shooting"} />,
+            cell: (info) => info.renderValue(),
+            enableSorting: false,
+          }),
+          columnHelper.accessor("defending", {
+            id: "Defending",
+            header: () => <Tooltip text={"DEF"} tooltipText={"Defending"} />,
+            cell: (info) => info.renderValue(),
+            enableSorting: false,
+          }),
+          columnHelper.accessor("dribbling", {
+            id: "Dribbling",
+            header: () => <Tooltip text={"DRB"} tooltipText={"Dribbling"} />,
+            cell: (info) => info.renderValue(),
+            enableSorting: false,
+          }),
+          columnHelper.accessor("physical", {
+            id: "Physical",
+            header: () => <Tooltip text={"PHY"} tooltipText={"Physical"} />,
+            cell: (info) => info.renderValue(),
+            enableSorting: false,
+          }),
+          columnHelper.accessor("vision", {
+            id: "Vision",
+            header: () => <Tooltip text={"VIS"} tooltipText={"Vision"} />,
+            cell: (info) => info.renderValue(),
+            enableSorting: false,
+          }),
+        ],
+      }),
+      columnHelper.display({
+        id: "actions",
+        enableHiding: true,
+        cell: (props) => {
+          return (
+            <span className="testtest">
+              <MdOutlineEdit
+                className="action-icon edit-icon"
+                onClick={() => handleOnClickEdit(props.row.original)}
+              />
+              <MdDeleteForever
+                className="action-icon trash-icon"
+                onClick={() => handleOnClickDelete(props.row.original)}
+              />
+            </span>
+          );
+        },
+      }),
+    ],
+    [columnHelper]
+  );
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -174,7 +174,7 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
     setShowModal(true);
   };
 
-  const editPlayer = (name: string, value: string | number) => {
+  const editFields = (name: string, value: string | number) => {
     setSelectedPlayer((prev) => ({
       ...prev,
       [name]: value,
@@ -195,18 +195,23 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
       {showModal && (
         <DialogModal visible={showModal} onClose={toggleModal}>
           {action === "NEW" && (
-            <AddPlayer updatePlayers={updateData} player={selectedPlayer} editPlayer={editPlayer} />
+            <AddPlayer
+              updatePlayers={updateData}
+              player={selectedPlayer}
+              editFields={editFields}
+              selectedSquad={selectedSquad}
+            />
           )}
           {action === "EDIT" && (
             <AddPlayer
               updatePlayers={updateData}
               player={selectedPlayer}
-              editPlayer={editPlayer}
+              editFields={editFields}
               selectedSquad={selectedSquad}
             />
           )}
           {action === "DELETE" && (
-            <DeletePlayer player={selectedPlayer} squadName={selectedSquad?.name} />
+            <DeletePlayer player={selectedPlayer} squad={selectedSquad} update={updateData} />
           )}
         </DialogModal>
       )}
@@ -216,7 +221,7 @@ export const Table = ({ data, children, selectedSquad, updateData }: TableProps)
             Manage Players: {data.length ? `${data.length} / ${maxPlayers}` : ""}
           </div>
           <div className="table-header-right">
-            <div className="table-header-right-item">{left}</div>
+            <div className="table-header-right-item"></div>
             {canAdd && (
               <div className="table-header-right-item">
                 <ActionButton {...actionProps} />

@@ -1,18 +1,48 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { MdWarning } from "react-icons/md";
 import { Squad } from "../../types/teamTypes";
 import { DialogModalContext } from "./DialogModal";
+import { deleteSquad, getSquadList } from "../../api/SquadApi";
+import { wait } from "../../utils/utils";
+import { AxiosError } from "axios";
+import { Message } from "../../types/utilityTypes";
 
 interface DeleteSquadProps {
   squad?: Squad;
+  onDelete: (squadList: Squad[]) => void;
 }
 
-export const DeleteSquad = ({ squad }: DeleteSquadProps) => {
+const defaultMsg = {
+  message: "Deleting a squad will remove the squad and all its players",
+};
+
+export const DeleteSquad = ({ squad, onDelete }: DeleteSquadProps) => {
   const modalContext = useContext(DialogModalContext);
+  const [message, setMessage] = useState<Message>(defaultMsg);
 
-  const handleOnClick = () => {
-    // delete api call
+  const handleOnClick = async () => {
+    if (!squad) {
+      return;
+    }
 
+    try {
+      const deleteResponse = await deleteSquad(squad?.id);
+      const getResponse = await getSquadList();
+      const squadList: Squad[] = getResponse.data;
+      onDelete(squadList);
+
+      setMessage({ type: "success", message: deleteResponse.data });
+      await wait(1000);
+
+      handleOnClose();
+    } catch (e) {
+      if (e instanceof AxiosError && e.response) {
+        setMessage({ type: "error", message: e.response.data });
+      }
+    }
+  };
+
+  const handleOnClose = () => {
     modalContext?.handleOnClose();
   };
 
@@ -23,13 +53,19 @@ export const DeleteSquad = ({ squad }: DeleteSquadProps) => {
         Delete Team
       </h2>
       <div className="modal-body">
-        <p>Deleting a squad will delete the squad along with all its players.</p>
+        <p className={message.type}>{message.message}</p>
       </div>
       <div className="modal-footer">
-        <button className="modal-btn btn-negative">Delete</button>
-        <button className="modal-btn btn-neutral" onClick={handleOnClick}>
-          Cancel
-        </button>
+        {message.type !== "success" && (
+          <>
+            <button className="modal-btn btn-negative" onClick={handleOnClick}>
+              Confirm
+            </button>
+            <button className="modal-btn btn-neutral" onClick={handleOnClose}>
+              Cancel
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

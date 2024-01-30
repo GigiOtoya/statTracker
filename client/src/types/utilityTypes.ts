@@ -7,3 +7,8 @@ export type Point = {
 
 export const buttonTypes = ["btn-positive", "btn-negative", "btn-neutral"] as const;
 export type ButtonType = (typeof buttonTypes)[number];
+
+export type Message = {
+  type?: "success" | "error";
+  message: string;
+};

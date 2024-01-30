@@ -26,9 +26,15 @@ export const DialogModal = ({ visible, onClose, children }: DialogModalProps) =>
     onClose();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (e.key === "Escape") {
+      // console.log(e.key);
+    }
+  };
+
   return (
     <DialogModalContext.Provider value={{ modalRef, handleOnClose }}>
-      <dialog className="modal" ref={modalRef} onClose={handleOnClose}>
+      <dialog className="modal" ref={modalRef} onClose={handleOnClose} onKeyDown={handleKeyDown}>
         {children}
       </dialog>
     </DialogModalContext.Provider>

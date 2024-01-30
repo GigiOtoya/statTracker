@@ -75,6 +75,10 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+.modal-btn:disabled {
+  background-color: #434343;
+}
+
 .btn-close {
   background-color: #434343;
 }

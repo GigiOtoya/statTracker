@@ -24,7 +24,6 @@ export const AddSquad = ({ squad, update, updateList }: Props) => {
     e.preventDefault();
 
     const newSquad: NewSquad = { name };
-    console.log(newSquad);
 
     try {
       if (squad) {
@@ -83,7 +82,11 @@ export const AddSquad = ({ squad, update, updateList }: Props) => {
               />
               <div className="error">{error}</div>
               <div className="modal-footer">
-                <button className="modal-btn btn-positive" type="submit">
+                <button
+                  className="modal-btn btn-positive"
+                  type="submit"
+                  disabled={squad?.name === name}
+                >
                   {squad ? "Update Team" : "Create Team"}
                 </button>
                 <button className="modal-btn btn-neutral" type="button" onClick={handleClose}>

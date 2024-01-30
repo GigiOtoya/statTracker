@@ -24,7 +24,7 @@ export interface Player {
   vision?: number;
 }
 
-export type UpdatePlayerProperties = Partial<Omit<Player, "id">>;
+export type MutablePlayerProperties = Partial<Omit<Player, "id">>;
 
 export const defaultPlayer: Player = {
   number: 1,

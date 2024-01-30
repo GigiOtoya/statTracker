@@ -17,3 +17,12 @@ export const addPlayer = (player: Player, squadId: number): Promise<AxiosRespons
 export const patchPlayers = (players: Player[]): Promise<AxiosResponse> => {
   return apiClient.post("/players", players);
 };
+
+export const editPlayer = (player: Player): Promise<AxiosResponse> => {
+  console.log(player);
+  return apiClient.put(`/players/id/${player.id}`, player);
+};
+
+export const deletePlayer = (id: number): Promise<AxiosResponse> => {
+  return apiClient.delete(`/players/id/${id}`);
+};

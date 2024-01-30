@@ -1,4 +1,4 @@
-import { Player, UpdatePlayerProperties, Squad } from "../types/teamTypes";
+import { Player, MutablePlayerProperties, Squad } from "../types/teamTypes";
 import { buttonTypes } from "../types/utilityTypes";
 import { DropDown } from "./dropdown/DropDown";
 import { Table } from "./table/Table";
@@ -25,13 +25,12 @@ export const SquadBuilder = () => {
     getSquadList()
       .then((res) => {
         setSquadList(res.data);
-        console.log(res.data);
+        console.log(res);
       })
       .then(() => {
         const storedSquad = localStorage.getItem("selectedSquad");
         if (storedSquad) {
           const squad: Squad = JSON.parse(storedSquad);
-          console.log(squad);
           setSelectedSquad(squad);
         }
       })
@@ -47,12 +46,14 @@ export const SquadBuilder = () => {
       getSquadPlayers(selectedSquad.id)
         .then((res) => {
           const players: Player[] = res.data;
-          console.log(players);
+          // console.log(players);
           setPlayers(players);
         })
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      setPlayers([]);
     }
   }, [selectedSquad]);
 
@@ -74,7 +75,7 @@ export const SquadBuilder = () => {
     setPlayers(playerList);
   };
 
-  const updatePlayerProperties = (playerId: number, updatedProperties: UpdatePlayerProperties) => {
+  const updatePlayerProperties = (playerId: number, updatedProperties: MutablePlayerProperties) => {
     setPlayers((prevPlayers) => {
       return prevPlayers.map((player) => {
         if (player.id === playerId) {
@@ -89,6 +90,12 @@ export const SquadBuilder = () => {
     setSquadList(newSquadList);
   };
 
+  const onSquadDeletion = (newSquadList: Squad[]) => {
+    updateSquadList(newSquadList);
+    setSelectedSquad(undefined);
+    localStorage.removeItem("selectedSquad");
+  };
+
   const editModal = () => {
     setModal(
       <AddSquad squad={selectedSquad} update={updateSquadName} updateList={updateSquadList} />
@@ -100,7 +107,7 @@ export const SquadBuilder = () => {
   };
 
   const deleteModal = () => {
-    setModal(<DeleteSquad squad={selectedSquad} />);
+    setModal(<DeleteSquad squad={selectedSquad} onDelete={onSquadDeletion} />);
   };
 
   const hideModal = () => {
@@ -125,14 +132,12 @@ export const SquadBuilder = () => {
           placeHolder="Select Squad"
           switchItem={changeSelectedSquad}
         >
-          <MdOutlineEdit className="action-icon" onClick={editModal} />
-          <ActionButton text={"New Squad"} icon={addIcon} type={buttonTypes[0]} fn={newModal} />
+          {selectedSquad && <MdOutlineEdit className="action-icon" onClick={editModal} />}
+          <ActionButton {...newProps} fn={newModal} />
+          {selectedSquad && <ActionButton {...deleteProps} fn={deleteModal} />}
         </DropDown>
 
-        <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad}>
-          <ActionButton {...deleteProps} fn={deleteModal} />
-          <ActionButton text={"Add New Squad"} icon={addIcon} type={buttonTypes[0]} fn={() => {}} />
-        </Table>
+        <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad} />
       </>
       <>
         <RightPane players={players} updatePlayerProperties={updatePlayerProperties} />
@@ -141,4 +146,5 @@ export const SquadBuilder = () => {
   );
 };
 
+const newProps = { text: "New Squad", icon: addIcon, type: buttonTypes[0] };
 const deleteProps = { text: "Delete Squad", icon: deleteIcon, type: buttonTypes[1] };

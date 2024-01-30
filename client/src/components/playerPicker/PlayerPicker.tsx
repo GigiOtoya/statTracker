@@ -1,5 +1,4 @@
-import { patchPlayers } from "../../api/PlayerApi";
-import { Player, UpdatePlayerProperties } from "../../types/teamTypes";
+import { Player, MutablePlayerProperties } from "../../types/teamTypes";
 import { buttonTypes } from "../../types/utilityTypes";
 import { ActionButton } from "../actionButton/ActionButton";
 import { PlayerItem } from "./PlayerItem";
@@ -8,7 +7,7 @@ import "./PlayerPicker.css";
 interface PlayerPickerProps {
   starters: Player[];
   reserves: Player[];
-  updatePlayerProperties: (playerId: number, updatedProperties: UpdatePlayerProperties) => void;
+  updatePlayerProperties: (playerId: number, updatedProperties: MutablePlayerProperties) => void;
 }
 
 export const PlayerPicker = ({ starters, reserves, updatePlayerProperties }: PlayerPickerProps) => {
