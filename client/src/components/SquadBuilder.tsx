@@ -133,8 +133,8 @@ export const SquadBuilder = () => {
           switchItem={changeSelectedSquad}
         >
           {selectedSquad && <MdOutlineEdit className="action-icon" onClick={editModal} />}
-          <ActionButton {...newProps} fn={newModal} />
-          {selectedSquad && <ActionButton {...deleteProps} fn={deleteModal} />}
+          <ActionButton {...newProps} onClick={newModal} />
+          {selectedSquad && <ActionButton {...deleteProps} onClick={deleteModal} />}
         </DropDown>
 
         <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad} />
@@ -150,5 +150,5 @@ export const SquadBuilder = () => {
   );
 };
 
-const newProps = { text: "New Squad", icon: addIcon, type: buttonTypes[0] };
-const deleteProps = { text: "Delete Squad", icon: deleteIcon, type: buttonTypes[1] };
+const newProps = { text: "New Squad", icon: addIcon, className: buttonTypes[0] };
+const deleteProps = { text: "Delete Squad", icon: deleteIcon, className: buttonTypes[2] };

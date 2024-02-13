@@ -1,0 +1,18 @@
+.container {
+  color: white;
+  width: 100%;
+}
+
+.starters {
+  padding-block: 4px;
+}
+
+.reserves {
+  padding-block: 4px;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

@@ -1,18 +1,18 @@
 import { Player } from "../../types/teamTypes";
-import "./PlayerPicker.css";
+import styles from "./PlayerPickerItem.module.css";
 
-interface PlayerItemProps {
+interface PlayerPickerItemProps {
   player: Player;
   handleMovePlayer: (player: Player) => void;
 }
 
-export const PlayerItem = ({ player, handleMovePlayer }: PlayerItemProps) => {
+export const PlayerPickerItem = ({ player, handleMovePlayer }: PlayerPickerItemProps) => {
   const handleOnClick = () => {
     handleMovePlayer(player);
   };
 
   return (
-    <div className="player-item" onClick={handleOnClick}>
+    <div className={styles.item} onClick={handleOnClick}>
       {player.number}
     </div>
   );

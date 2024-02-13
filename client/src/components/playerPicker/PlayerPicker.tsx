@@ -1,8 +1,8 @@
 import { Player, MutablePlayerProperties } from "../../types/teamTypes";
 import { buttonTypes } from "../../types/utilityTypes";
 import { ActionButton } from "../actionButton/ActionButton";
-import { PlayerItem } from "./PlayerItem";
-import "./PlayerPicker.css";
+import { PlayerPickerItem } from "../playerPickerItem/PlayerPickerItem";
+import styles from "./PlayerPicker.module.css";
 
 interface Props {
   starters: Player[];
@@ -36,25 +36,25 @@ export const PlayerPicker = ({ starters, reserves, saveLineUp, updatePlayerPrope
   };
 
   return (
-    <div className="player-picker-container">
-      <div className="player-picker-starters">
+    <div className={styles.container}>
+      <div className={styles.starters}>
         <label>{`Starters: ${starters.length}/${maxStarters}`}</label>
-        <div className="player-picker-items">
+        <div className={styles.items}>
           {starters.map((player) => (
-            <PlayerItem key={player.id} player={player} handleMovePlayer={handleMovePlayer} />
+            <PlayerPickerItem key={player.id} player={player} handleMovePlayer={handleMovePlayer} />
           ))}
         </div>
       </div>
-      <div className="player-picker-reserves">
+      <div className={styles.reserves}>
         <label>{`Reserves: ${reserves.length}/${maxReserves}`}</label>
-        <div className="player-picker-items">
+        <div className={styles.items}>
           {reserves.map((player) => (
-            <PlayerItem key={player.id} player={player} handleMovePlayer={handleMovePlayer} />
+            <PlayerPickerItem key={player.id} player={player} handleMovePlayer={handleMovePlayer} />
           ))}
         </div>
       </div>
       <div>
-        <ActionButton text="Save Line-Up" type={buttonTypes[0]} fn={handleOnClick} />
+        <ActionButton text="Save Line-Up" className={buttonTypes[0]} onClick={handleOnClick} />
       </div>
     </div>
   );

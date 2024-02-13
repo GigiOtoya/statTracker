@@ -17,10 +17,6 @@
   transition-duration: 200ms;
 }
 
-.action-btn:active {
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
 .btn-positive {
   background-color: rgb(60, 72, 182);
 }
@@ -31,6 +27,20 @@
 
 .btn-neutral {
   background-color: rgb(90, 90, 90);
+}
+
+.btn-clear {
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.btn-clear:hover {
+  border-color: white;
+}
+
+.large {
+  font-size: 16px;
+  padding: 10px;
 }
 
 .action-btn img {

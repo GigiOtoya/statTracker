@@ -54,6 +54,11 @@
   height: 60px;
 }
 
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
 .svg-container {
   width: 100%;
   max-width: 600px;
@@ -65,10 +70,6 @@
 
 .page-title {
   font-size: 30px;
-}
-
-.auth {
-  font-size: 20px;
 }
 
 .squad-builder {

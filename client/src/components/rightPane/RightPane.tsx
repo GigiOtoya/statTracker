@@ -1,5 +1,5 @@
 import { Player, MutablePlayerProperties, Squad } from "../../types/teamTypes";
-import { Field } from "../Field";
+import { Field } from "../field/Field";
 import { PlayerPicker } from "../playerPicker/PlayerPicker";
 import { DropDown } from "../dropdown/DropDown";
 import { useEffect, useState } from "react";

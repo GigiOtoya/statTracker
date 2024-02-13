@@ -186,7 +186,7 @@ export const Table = ({ data, selectedSquad, updateData }: TableProps) => {
   const actionProps = {
     text: "New Player",
     icon: addIcon,
-    type: buttonTypes[0],
+    className: buttonTypes[0],
     fn: handleOnClickNew,
   };
 

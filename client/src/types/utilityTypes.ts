@@ -5,7 +5,17 @@ export type Point = {
   y: number;
 };
 
-export const buttonTypes = ["btn-positive", "btn-negative", "btn-neutral"] as const;
+export const buttonTypes = [
+  "btn-positive",
+  "btn-positive large",
+  "btn-negative",
+  "btn-negative large",
+  "btn-neutral",
+  "btn-neutral large",
+  "btn-clear",
+  "btn-clear large",
+] as const;
+
 export type ButtonType = (typeof buttonTypes)[number];
 
 export type Message = {

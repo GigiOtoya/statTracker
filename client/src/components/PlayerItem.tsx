@@ -6,12 +6,7 @@ type props = {
 export const PlayerItem = ({ player }: props) => {
   return (
     <div className="player-item">
-      <span className="stat number">
-        {/* <svg>
-          <circle></circle>
-        </svg> */}{" "}
-        {player.number}
-      </span>
+      <span className="stat number">{player.number}</span>
       <span className="col-name">{player.firstName}</span>
       <span className="stat pos">{player.position}</span>
       <span className="stat pace">{player.speed}</span>

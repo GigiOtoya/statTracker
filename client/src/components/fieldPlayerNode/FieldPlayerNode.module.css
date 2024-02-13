@@ -1,15 +1,15 @@
-.player-circle {
+.node {
   fill: rgb(10, 49, 10);
   stroke: rgb(0, 0, 0);
   stroke-width: 8px;
   cursor: grab;
 }
 
-.player-circle:active {
+.node:active {
   cursor: grabbing;
 }
 
-.player-circle-text {
+.number {
   fill: white;
   font-size: 100px;
   user-select: none;
@@ -18,7 +18,7 @@
   pointer-events: none;
 }
 
-.player-circle-bottom {
+.name {
   fill: white;
   font-size: 38px;
   user-select: none;
