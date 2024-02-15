@@ -7,6 +7,7 @@ import { Formations } from "../../types/formations";
 import { Positions } from "../../types/positions";
 import { viewbox } from "../../utils/presets";
 import { Point } from "../../types/utilityTypes";
+import styles from "./Field.module.css";
 
 interface FieldProps {
   players: Player[];
@@ -44,7 +45,6 @@ export const Field = ({ players, formationName }: FieldProps) => {
       const x = (clientX - left) / scaleX;
       const y = (clientY - top) / scaleY;
 
-      console.log(x, y);
       node?.setAttribute("transform", `translate(${x}, ${y})`);
     }
   };
@@ -57,6 +57,7 @@ export const Field = ({ players, formationName }: FieldProps) => {
           key={player.id}
           player={player}
           point={point}
+          position={pos}
           onMouseDown={handleMouseDown}
         />
       );
@@ -64,14 +65,14 @@ export const Field = ({ players, formationName }: FieldProps) => {
   );
 
   return (
-    <div className="svg-container">
+    <div className={styles.container}>
       <svg
         ref={fieldRef}
         viewBox={`${viewbox.minx} ${viewbox.miny} ${viewbox.width} ${viewbox.height} `}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       >
-        <FieldSVG className="svg-field"></FieldSVG>
+        <FieldSVG className={styles.svg} />
         {playerNodes}
       </svg>
     </div>

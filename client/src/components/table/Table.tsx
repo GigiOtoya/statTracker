@@ -1,6 +1,6 @@
 import { Player, Squad, defaultPlayer } from "../../types/teamTypes";
 import { buttonTypes } from "../../types/utilityTypes";
-import { ReactNode, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Tooltip } from "../tooltip/Tooltip";
 import { ActionButton } from "../actionButton/ActionButton";
 import { MdDeleteForever, MdOutlineEdit } from "react-icons/md";
@@ -109,7 +109,7 @@ export const Table = ({ data, selectedSquad, updateData }: TableProps) => {
         enableHiding: true,
         cell: (props) => {
           return (
-            <span className="testtest">
+            <span className="row-actions">
               <MdOutlineEdit
                 className="action-icon edit-icon"
                 onClick={() => handleOnClickEdit(props.row.original)}

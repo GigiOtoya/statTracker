@@ -18,6 +18,19 @@ export const alternativePosition: Record<string, Positions[]> = {
   RB: ["LB", "CB"],
 };
 
+export const inProperPosition = (p1: Positions, p2: Positions) => {
+  if (p1 === p2) {
+    return "perfect";
+  }
+
+  const altPositions = alternativePosition[p1] ?? [];
+  if (altPositions.includes(p2)) {
+    return "good";
+  }
+
+  return "bad";
+};
+
 export const positionInFormation = (position: Positions, formation: Formation): boolean => {
   return position in formation.positions;
 };

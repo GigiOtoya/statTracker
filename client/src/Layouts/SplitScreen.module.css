@@ -1,11 +1,11 @@
-.main-container {
+.container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   max-width: 1920px;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .left {
@@ -29,7 +29,7 @@
 }
 
 @media screen and (max-width: 720px) {
-  .main-container {
+  .container {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

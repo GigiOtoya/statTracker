@@ -14,12 +14,19 @@ import { getSquadPlayers } from "../api/PlayerApi";
 import { RightPane } from "./rightPane/RightPane";
 import { MdOutlineEdit } from "react-icons/md";
 import { DialogModal } from "./modals/DialogModal";
+import { useAuth } from "@clerk/clerk-react";
 
 export const SquadBuilder = () => {
   const [squadList, setSquadList] = useState<Squad[]>([]);
   const [selectedSquad, setSelectedSquad] = useState<Squad>();
   const [players, setPlayers] = useState<Player[]>([]);
   const [modal, setModal] = useState<ReactNode>();
+
+  const auth = useAuth();
+
+  if (auth.isLoaded) {
+    console.log(auth);
+  }
 
   useEffect(() => {
     getSquadList()

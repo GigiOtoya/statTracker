@@ -1,0 +1,55 @@
+.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+.welcome a {
+  text-decoration: none;
+}
+
+.button a {
+  display: inline-block;
+  border: 2px solid white;
+  border-radius: 26px;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.button a:hover {
+  background-color: green;
+  transition-duration: 400ms;
+  color: white;
+}
+
+.button a:active {
+  border-color: green;
+}
+
+.footer {
+  display: flex;
+  gap: 4px;
+}
+
+.footer span {
+  color: white;
+}
+
+.footer a {
+  color: rgb(25, 107, 5);
+}
+
+.footer a:hover {
+  filter: brightness(200%);
+}

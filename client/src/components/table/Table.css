@@ -95,7 +95,7 @@ tbody tr:hover {
   }
 }
 
-.testtest {
+.row-actions {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
