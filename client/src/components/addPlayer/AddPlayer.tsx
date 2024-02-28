@@ -81,10 +81,7 @@ export const AddPlayer = ({ selectedSquad, updatePlayers, player, editFields }: 
 
   return (
     <form className="modal-container" onSubmit={(e) => handleSubmit(e)}>
-      <h2 className="modal-header header-positive">
-        {" "}
-        {selectedSquad ? "New Player" : "Edit Player"}{" "}
-      </h2>
+      <h2 className="modal-header header-positive">{player.id ? "Edit Player" : "New Player"}</h2>
       {message.type === "success" ? (
         <p className={message.type}>{message.message}</p>
       ) : (

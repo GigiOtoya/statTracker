@@ -1,6 +1,5 @@
 import { SignOutButton, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
-import { ActionButton } from "../actionButton/ActionButton";
 import styles from "./Header.module.css";
 
 export const Header = () => {
@@ -13,7 +12,7 @@ export const Header = () => {
         <SignedIn>
           <div className={styles.action}>
             <SignOutButton>
-              <ActionButton text="Sign Out" className="btn-clear large" onClick={() => {}} />
+              <Link to="/">Sign Out</Link>
             </SignOutButton>
           </div>
         </SignedIn>
@@ -21,12 +20,6 @@ export const Header = () => {
           <div className={styles.action}>
             <Link to="/SignIn">Sign In</Link>
             <Link to="/SignUp">Sign Up</Link>
-            {/* <SignInButton>
-            <ActionButton text="Sign In" className="btn-clear large" onClick={() => {}} />
-          </SignInButton>
-          <SignUpButton>
-            <ActionButton text="Sign Up" className="btn-clear large" onClick={() => {}} />
-          </SignUpButton> */}
           </div>
         </SignedOut>
       </header>
