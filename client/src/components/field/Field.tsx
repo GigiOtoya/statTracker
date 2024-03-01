@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { Player } from "../../types/teamTypes";
 import { FieldPlayerNode } from "../fieldPlayerNode/FieldPlayerNode";
 import { playersToPositions } from "../../utils/utils";
-import { Formations } from "../../types/formations";
+import { Formation, Formations, formations } from "../../types/formations";
 import { Positions } from "../../types/positions";
 import { viewbox } from "../../utils/presets";
 import { Point } from "../../types/utilityTypes";
@@ -16,11 +16,9 @@ interface FieldProps {
 
 export const Field = ({ players, formationName }: FieldProps) => {
   const fieldRef = useRef<SVGSVGElement>(null);
-  const formation = playersToPositions(players, formationName);
-  const positions = Object.keys(formation.positions) as Positions[];
-
   const [isDragging, setIsDragging] = useState(false);
   const [node, setNode] = useState<SVGGElement | null>();
+  const [form, setForm] = useState<Formation>(formations[formationName]);
 
   const handleMouseDown = (e: React.MouseEvent<SVGGElement>) => {
     const selectedNode = e.currentTarget;
@@ -48,6 +46,9 @@ export const Field = ({ players, formationName }: FieldProps) => {
       node?.setAttribute("transform", `translate(${x}, ${y})`);
     }
   };
+
+  const formation = playersToPositions(players, formationName);
+  const positions = Object.keys(formation.positions) as Positions[];
 
   const playerNodes = positions.flatMap((pos) =>
     formation.players[pos]?.map((player, index) => {

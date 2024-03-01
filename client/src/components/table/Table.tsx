@@ -183,6 +183,7 @@ export const Table = ({ data, selectedSquad, updateData }: TableProps) => {
 
   const maxPlayers = 25;
   const canAdd = selectedSquad && data.length < maxPlayers;
+
   const actionProps = {
     text: "New Player",
     icon: addIcon,

@@ -8,7 +8,7 @@ import { AxiosError } from "axios";
 import { Message } from "../../types/utilityTypes";
 
 interface DeleteSquadProps {
-  squad?: Squad;
+  selectedSquad?: Squad;
   onDelete: (squadList: Squad[]) => void;
 }
 
@@ -16,17 +16,17 @@ const defaultMsg = {
   message: "Deleting a squad will remove the squad and all its players",
 };
 
-export const DeleteSquad = ({ squad, onDelete }: DeleteSquadProps) => {
+export const DeleteSquad = ({ selectedSquad, onDelete }: DeleteSquadProps) => {
   const modalContext = useContext(DialogModalContext);
   const [message, setMessage] = useState<Message>(defaultMsg);
 
   const handleOnClick = async () => {
-    if (!squad) {
+    if (!selectedSquad) {
       return;
     }
 
     try {
-      const deleteResponse = await deleteSquad(squad?.id);
+      const deleteResponse = await deleteSquad(selectedSquad?.id);
       const getResponse = await getSquadList();
       const squadList: Squad[] = getResponse.data;
       onDelete(squadList);

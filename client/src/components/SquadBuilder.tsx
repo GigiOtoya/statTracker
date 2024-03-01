@@ -16,6 +16,8 @@ import { RightPane } from "./rightPane/RightPane";
 import { MdOutlineEdit } from "react-icons/md";
 import { DialogModal } from "./modals/DialogModal";
 import { useAuth } from "@clerk/clerk-react";
+import { Message } from "./message/Message";
+import { messages } from "../utils/presets";
 
 export const SquadBuilder = () => {
   const { isLoaded, isSignedIn, getToken } = useAuth();
@@ -115,7 +117,7 @@ export const SquadBuilder = () => {
   };
 
   const deleteModal = () => {
-    setModal(<DeleteSquad squad={selectedSquad} onDelete={onSquadDeletion} />);
+    setModal(<DeleteSquad selectedSquad={selectedSquad} onDelete={onSquadDeletion} />);
   };
 
   const hideModal = () => {
@@ -146,6 +148,9 @@ export const SquadBuilder = () => {
         </DropDown>
 
         <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad} />
+        {!squadList.length && <Message text={messages.squadListEmpty} />}
+        {!squadList.length && selectedSquad && <Message text={messages.squadUnselected} />}
+        {selectedSquad && !players.length && <Message text={messages.playerListEmpty} />}
       </>
       <>
         <RightPane

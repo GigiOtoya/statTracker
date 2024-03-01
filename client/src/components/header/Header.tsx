@@ -1,8 +1,11 @@
-import { SignOutButton, SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignOutButton, SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
+import { DropDown } from "../dropdown/DropDown";
 
 export const Header = () => {
+  const { user } = useUser();
+
   return (
     <div className={styles.bar}>
       <header className={styles.header}>
@@ -11,6 +14,7 @@ export const Header = () => {
         </div>
         <SignedIn>
           <div className={styles.action}>
+            <div> {user?.emailAddresses[0].emailAddress}</div>
             <SignOutButton>
               <Link to="/">Sign Out</Link>
             </SignOutButton>

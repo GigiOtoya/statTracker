@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message {
+  background-color: #14161a;
+  border: 2px solid white;
+  border-radius: 4px;
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: white;
+  max-width: 300px;
+}
