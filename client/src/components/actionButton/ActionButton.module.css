@@ -1,20 +1,22 @@
-.action-btn {
+.btn {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   border-radius: 2px;
   box-sizing: border-box;
   color: white;
   font-weight: bold;
   user-select: none;
+  gap: 8px;
 }
 
-.action-btn:hover {
+.btn:hover {
   filter: brightness(85%);
   cursor: pointer;
   transition-duration: 200ms;
+  border-color: #2e323a;
 }
 
 .btn-positive {
@@ -35,7 +37,8 @@
 }
 
 .btn-clear:hover {
-  border-color: white;
+  border-color: #2e323a;
+  filter: brightness(200%);
 }
 
 .large {
@@ -43,7 +46,7 @@
   padding: 10px;
 }
 
-.action-btn img {
-  margin-right: 4px;
+.icon {
+  display: flex;
   box-sizing: border-box;
 }
