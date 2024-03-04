@@ -59,6 +59,8 @@
 }
 
 .row:last-child span {
+  display: flex;
+  align-items: center;
   padding-left: 12px;
 }
 
