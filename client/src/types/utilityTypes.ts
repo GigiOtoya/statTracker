@@ -18,6 +18,11 @@ export const buttonTypes = [
 
 export type ButtonType = (typeof buttonTypes)[number];
 
+export type InfoBoxMessage = {
+  title: string;
+  body: string;
+};
+
 export type Message = {
   type?: "success" | "error";
   message: string;

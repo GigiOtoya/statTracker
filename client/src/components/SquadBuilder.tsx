@@ -148,9 +148,9 @@ export const SquadBuilder = () => {
         </DropDown>
 
         <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad} />
-        {!squadList.length && <Message text={messages.squadListEmpty} />}
-        {!squadList.length && selectedSquad && <Message text={messages.squadUnselected} />}
-        {selectedSquad && !players.length && <Message text={messages.playerListEmpty} />}
+        {!squadList.length && <Message message={messages.squadListEmpty} />}
+        {!squadList.length && selectedSquad && <Message message={messages.squadUnselected} />}
+        {selectedSquad && !players.length && <Message message={messages.playerListEmpty} />}
       </>
       <>
         <RightPane
