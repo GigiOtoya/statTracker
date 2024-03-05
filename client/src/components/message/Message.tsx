@@ -8,10 +8,10 @@ interface MessageProps {
 export const Message = ({ message }: MessageProps) => {
   return (
     <div className={styles.container}>
-      <p className={styles.message}>
+      <div className={styles.message}>
         <div>{message.title}</div>
         <div>{message.body}</div>
-      </p>
+      </div>
     </div>
   );
 };

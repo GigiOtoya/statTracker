@@ -6,6 +6,7 @@ import { AxiosError } from "axios";
 import { wait } from "../../utils/utils";
 import { Input } from "../input/Input";
 import { DialogModalContext } from "./DialogModal";
+import styles from "./Modal.module.css";
 
 interface Props {
   squad?: Squad;
@@ -60,11 +61,11 @@ export const AddSquad = ({ squad, update, updateList }: Props) => {
     }
     setName(e.currentTarget.value);
   };
-
+  // "modal-header header-positive"
   return (
-    <div className="modal-container">
-      <h2 className="modal-header header-positive">{squad ? "Edit Team" : " New Team"}</h2>
-      <div className="modal-body">
+    <div className={styles.container}>
+      <h2 className={`${styles.header} ${styles.positive}`}>{squad ? "Edit Team" : " New Team"}</h2>
+      <div className={styles.body}>
         <form onSubmit={(e) => handleSubmit(e)}>
           {success ? (
             <p className="success">{success}</p>
@@ -81,15 +82,19 @@ export const AddSquad = ({ squad, update, updateList }: Props) => {
                 maxLength={50}
               />
               <div className="error">{error}</div>
-              <div className="modal-footer">
+              <div className={styles.footer}>
                 <button
-                  className="modal-btn btn-positive"
+                  className={`${styles.btn} ${styles.positive}`}
                   type="submit"
                   disabled={squad?.name === name}
                 >
                   {squad ? "Update Team" : "Create Team"}
                 </button>
-                <button className="modal-btn btn-neutral" type="button" onClick={handleClose}>
+                <button
+                  className={`${styles.btn} ${styles.neutral}`}
+                  type="button"
+                  onClick={handleClose}
+                >
                   Cancel
                 </button>
               </div>

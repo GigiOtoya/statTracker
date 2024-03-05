@@ -6,6 +6,7 @@ import { deleteSquad, getSquadList } from "../../api/SquadApi";
 import { wait } from "../../utils/utils";
 import { AxiosError } from "axios";
 import { Message } from "../../types/utilityTypes";
+import styles from "./Modal.module.css";
 
 interface DeleteSquadProps {
   selectedSquad?: Squad;
@@ -47,21 +48,21 @@ export const DeleteSquad = ({ selectedSquad, onDelete }: DeleteSquadProps) => {
   };
 
   return (
-    <div className="modal-container">
-      <h2 className="modal-header header-negative">
+    <div className={styles.container}>
+      <h2 className={`${styles.header} ${styles.negative}`}>
         <MdWarning />
         Delete Team
       </h2>
-      <div className="modal-body">
+      <div className={styles.body}>
         <p className={message.type}>{message.message}</p>
       </div>
-      <div className="modal-footer">
+      <div className={styles.footer}>
         {message.type !== "success" && (
           <>
-            <button className="modal-btn btn-negative" onClick={handleOnClick}>
+            <button className={`${styles.btn} ${styles.negative}`} onClick={handleOnClick}>
               Confirm
             </button>
-            <button className="modal-btn btn-neutral" onClick={handleOnClose}>
+            <button className={`${styles.btn} ${styles.neutral}`} onClick={handleOnClose}>
               Cancel
             </button>
           </>

@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  color: white;
+}
+
+.value {
+  color: white;
+}

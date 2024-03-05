@@ -1,4 +1,5 @@
 import { InputHTMLAttributes } from "react";
+import styles from "./Input.module.css";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -32,9 +33,9 @@ export const inputNumPresets: InputProps = {
 export const Input = ({ label, displayInput, ...props }: InputProps) => {
   return (
     <div>
-      <div className="input-header">
-        <label className="input-label">{`${label}:`}</label>
-        {displayInput && <span className="display-value">{props.value}</span>}
+      <div className={styles.header}>
+        <label className={styles.label}>{`${label}:`}</label>
+        {displayInput && <span className={styles.value}>{props.value}</span>}
       </div>
       <input {...props} />
     </div>

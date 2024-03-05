@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useEffect, useRef } from "react";
-import "./Modal.css";
+import styles from "./Modal.module.css";
 
 interface DialogModalProps {
   visible: boolean;
@@ -34,7 +34,12 @@ export const DialogModal = ({ visible, onClose, children }: DialogModalProps) =>
 
   return (
     <DialogModalContext.Provider value={{ modalRef, handleOnClose }}>
-      <dialog className="modal" ref={modalRef} onClose={handleOnClose} onKeyDown={handleKeyDown}>
+      <dialog
+        className={styles.modal}
+        ref={modalRef}
+        onClose={handleOnClose}
+        onKeyDown={handleKeyDown}
+      >
         {children}
       </dialog>
     </DialogModalContext.Provider>

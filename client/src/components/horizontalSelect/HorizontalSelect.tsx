@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { positionList, Positions } from "../../types/positions";
 import navLeft from "../../assets/navigate_left.svg";
 import navRight from "../../assets/navigate_right.svg";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { positionList, Positions } from "../../types/positions";
+import styles from "./horizontalSelect.module.css";
 
 interface SelectProps {
   label: string;
@@ -35,20 +35,20 @@ export const HorizontalSelect = ({ label, name, value, onChange }: SelectProps) 
   };
 
   return (
-    <div className="horizontal-select-container">
+    <div className={styles.wrapper}>
       <label>{label}:</label>
-      <div className="horizontal-select">
-        <div className="shift" onClick={handleOnClickLeft}>
+      <div className={styles.container}>
+        <span className={styles.shift} onClick={handleOnClickLeft}>
           <img src={navLeft} alt="<" />
-          {/* <MdKeyboardArrowLeft style={{ fill: "white" }} size={20} /> */}
-        </div>
-        <div className="not-selected">{positionList[getLeftIndex(index)]}</div>
-        <div className="selected">{value ? value : "_"}</div>
-        <div className="not-selected">{positionList[getRightIndex(index)]}</div>
-        <div className="shift" onClick={handleOnClickRight}>
+        </span>
+        <span className={styles.options}>
+          <span className={styles.darken}>{positionList[getLeftIndex(index)]}</span>
+          <span className={styles.highlight}>{value ? value : "_"}</span>
+          <span className={styles.darken}>{positionList[getRightIndex(index)]}</span>
+        </span>
+        <span className={styles.shift} onClick={handleOnClickRight}>
           <img src={navRight} alt=">" />
-          {/* <MdKeyboardArrowRight /> */}
-        </div>
+        </span>
       </div>
     </div>
   );

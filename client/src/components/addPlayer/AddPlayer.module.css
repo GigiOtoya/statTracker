@@ -1,0 +1,25 @@
+/* .player-data-name {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 200px;
+} */
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+}
+
+.inputs {
+  padding-inline: 40px;
+}
+
+.split {
+  display: flex;
+  gap: 10px;
+}
+
+.split div {
+  flex: 1;
+}

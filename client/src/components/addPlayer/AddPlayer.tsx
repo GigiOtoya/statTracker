@@ -1,14 +1,15 @@
 import { useContext, useState } from "react";
 import { Player, Squad, playerData } from "../../types/teamTypes";
 import { Input, inputTextPresets, inputRangePresets, inputNumPresets } from "../input/Input";
-import { HorizontalSelect } from "./HorizontalSelect";
-import "./AddPlayer.css";
+import { HorizontalSelect } from "../horizontalSelect/HorizontalSelect";
 import { getSquadPlayers, addPlayer, editPlayer } from "../../api/PlayerApi";
 import { AxiosError } from "axios";
 import { wait } from "../../utils/utils";
 import { validateInput } from "../../utils/validationUtils";
 import { DialogModalContext } from "../modals/DialogModal";
 import { Message } from "../../types/utilityTypes";
+import mstyles from "../modals/Modal.module.css";
+import styles from "./AddPlayer.module.css";
 
 interface Props {
   selectedSquad?: Squad;
@@ -80,34 +81,30 @@ export const AddPlayer = ({ selectedSquad, updatePlayers, player, editFields }: 
   };
 
   return (
-    <form className="modal-container" onSubmit={(e) => handleSubmit(e)}>
-      <h2 className="modal-header header-positive">{player.id ? "Edit Player" : "New Player"}</h2>
+    <form className={mstyles.container} onSubmit={(e) => handleSubmit(e)}>
+      <h2 className={`${mstyles.header} ${mstyles.positive}`}>
+        {player.id ? "Edit Player" : "New Player"}
+      </h2>
       {message.type === "success" ? (
         <p className={message.type}>{message.message}</p>
       ) : (
-        <>
-          <div className="split-2">
-            <div className="player-data-name">
-              <Input
-                label="First Name"
-                name={playerData.firstName}
-                placeholder="First Name..."
-                value={player.firstName}
-                {...textPresets}
-              ></Input>
-            </div>
-            <div className="player-data-name">
-              <Input
-                label="Last Name"
-                name={playerData.lastName}
-                placeholder="Last Name..."
-                value={player.lastName}
-                {...textPresets}
-              ></Input>
-            </div>
-          </div>
-          <div className="split-3">
-            <div className="split-3-data">
+        <div className="body">
+          <Input
+            label="First Name"
+            name={playerData.firstName}
+            placeholder="First Name..."
+            value={player.firstName}
+            {...textPresets}
+          />
+          <Input
+            label="Last Name"
+            name={playerData.lastName}
+            placeholder="Last Name..."
+            value={player.lastName}
+            {...textPresets}
+          />
+          <div className={styles.inputs}>
+            <div className={styles.split}>
               <Input
                 label="Number"
                 name={playerData.number}
@@ -120,61 +117,61 @@ export const AddPlayer = ({ selectedSquad, updatePlayers, player, editFields }: 
                 value={player.position}
                 onChange={editFields}
               />
-              <Input
-                label="Vision"
-                name={playerData.vision}
-                value={player.vision}
-                {...rangePresets}
-              />
             </div>
-            <div className="split-3-data">
-              <Input label="Speed" name={playerData.speed} value={player.speed} {...rangePresets} />
-              <Input
-                label="Passing"
-                name={playerData.passing}
-                value={player.passing}
-                {...rangePresets}
-              />
-              <Input
-                label="Shooting"
-                name={playerData.shooting}
-                value={player.shooting}
-                {...rangePresets}
-              />
-            </div>
-            <div className="split-3-data">
-              <Input
-                label="Defending"
-                name={playerData.defending}
-                value={player.defending}
-                {...rangePresets}
-              />
-              <Input
-                label="Dribbling"
-                name={playerData.dribbling}
-                value={player.dribbling}
-                {...rangePresets}
-              />
-              <Input
-                label="Physical"
-                name={playerData.physical}
-                value={player.physical}
-                {...rangePresets}
-              />
-            </div>
+            <Input
+              label="Vision"
+              name={playerData.vision}
+              value={player.vision}
+              {...rangePresets}
+            />
+            <Input label="Speed" name={playerData.speed} value={player.speed} {...rangePresets} />
+            <Input
+              label="Passing"
+              name={playerData.passing}
+              value={player.passing}
+              {...rangePresets}
+            />
+            <Input
+              label="Shooting"
+              name={playerData.shooting}
+              value={player.shooting}
+              {...rangePresets}
+            />
+            <Input
+              label="Defending"
+              name={playerData.defending}
+              value={player.defending}
+              {...rangePresets}
+            />
+            <Input
+              label="Dribbling"
+              name={playerData.dribbling}
+              value={player.dribbling}
+              {...rangePresets}
+            />
+            <Input
+              label="Physical"
+              name={playerData.physical}
+              value={player.physical}
+              {...rangePresets}
+            />
           </div>
-          <div className="modal-footer">
-            <button className="modal-btn btn-positive" type="submit">
+          <div className={mstyles.footer}>
+            <button className={`${mstyles.btn} ${mstyles.positive}`} type="submit">
               Submit
             </button>
-            <button className="modal-btn btn-neutral" type="button" onClick={handleClose}>
+            <button
+              className={`${mstyles.btn} ${mstyles.neutral}`}
+              type="button"
+              onClick={handleClose}
+            >
               Cancel
             </button>
           </div>
-          <div className="player-data-footer">
+          <div className={styles.footer}>
             {message.type === "error" && <p className={message.type}>{message.message}</p>}
           </div>
-        </>
+        </div>
       )}
     </form>
   );
