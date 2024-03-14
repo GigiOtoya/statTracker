@@ -9,33 +9,28 @@ import { DeleteSquad } from "./modals/DeleteSquad";
 import addIcon from "../assets/add.svg";
 import deleteIcon from "../assets/delete.svg";
 import { ReactNode, useEffect, useState } from "react";
-import { configToken } from "../api/Api";
 import { getSquadList } from "../api/SquadApi";
 import { getSquadPlayers } from "../api/PlayerApi";
 import { RightPane } from "./rightPane/RightPane";
 import { MdOutlineEdit } from "react-icons/md";
 import { DialogModal } from "./modals/DialogModal";
-import { useAuth } from "@clerk/clerk-react";
 import { Message } from "./message/Message";
-import { messages } from "../utils/presets";
+import { getMessage } from "../utils/utils";
+import { useAuthenticatedApiClient } from "../hooks/useAuthenticatedApiClient";
 
 export const SquadBuilder = () => {
-  const { isLoaded, isSignedIn, getToken } = useAuth();
-
-  if (isLoaded && isSignedIn) {
-    configToken(getToken);
-  }
+  useAuthenticatedApiClient();
 
   const [squadList, setSquadList] = useState<Squad[]>([]);
   const [selectedSquad, setSelectedSquad] = useState<Squad>();
   const [players, setPlayers] = useState<Player[]>([]);
   const [modal, setModal] = useState<ReactNode>();
+  const message = getMessage(squadList.length, players.length, selectedSquad);
 
   useEffect(() => {
     getSquadList()
       .then((res) => {
         setSquadList(res.data);
-        console.log(res);
       })
       .then(() => {
         const storedSquad = localStorage.getItem("selectedSquad");
@@ -44,9 +39,7 @@ export const SquadBuilder = () => {
           setSelectedSquad(squad);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
@@ -56,7 +49,6 @@ export const SquadBuilder = () => {
       getSquadPlayers(selectedSquad.id)
         .then((res) => {
           const players: Player[] = res.data;
-          // console.log(players);
           setPlayers(players);
         })
         .catch((err) => {
@@ -148,9 +140,7 @@ export const SquadBuilder = () => {
         </DropDown>
 
         <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad} />
-        {!squadList.length && <Message message={messages.squadListEmpty} />}
-        {!squadList.length && selectedSquad && <Message message={messages.squadUnselected} />}
-        {selectedSquad && !players.length && <Message message={messages.playerListEmpty} />}
+        {message && <Message message={message} />}
       </>
       <>
         <RightPane

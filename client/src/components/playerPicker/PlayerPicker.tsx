@@ -1,6 +1,5 @@
+import { MdOutlineSave } from "react-icons/md";
 import { Player, MutablePlayerProperties } from "../../types/teamTypes";
-import { buttonTypes } from "../../types/utilityTypes";
-import { ActionButton } from "../actionButton/ActionButton";
 import { PlayerPickerItem } from "../playerPickerItem/PlayerPickerItem";
 import styles from "./PlayerPicker.module.css";
 
@@ -14,6 +13,7 @@ interface Props {
 export const PlayerPicker = ({ starters, reserves, saveLineUp, updatePlayerProperties }: Props) => {
   const maxStarters = 11;
   const maxReserves = 25;
+  const canSave = starters.length > 0 || reserves.length > 0;
 
   const handleMovePlayer = (player: Player) => {
     if (!player.id) {
@@ -27,7 +27,7 @@ export const PlayerPicker = ({ starters, reserves, saveLineUp, updatePlayerPrope
   };
 
   const handleOnClick = () => {
-    if (!starters.length) {
+    if (!canSave) {
       return;
     }
 
@@ -37,25 +37,40 @@ export const PlayerPicker = ({ starters, reserves, saveLineUp, updatePlayerPrope
 
   return (
     <div className={styles.container}>
-      <div className={styles.starters}>
-        <label>{`Starters: ${starters.length}/${maxStarters}`}</label>
-        <div className={styles.items}>
-          {starters.map((player) => (
-            <PlayerPickerItem key={player.id} player={player} handleMovePlayer={handleMovePlayer} />
-          ))}
+      <span className={styles.lineup}>
+        <div className={styles.starters}>
+          <label>{`Starters: ${starters.length}/${maxStarters}`}</label>
+          <div className={styles.items}>
+            {starters.map((player) => (
+              <PlayerPickerItem
+                key={player.id}
+                player={player}
+                handleMovePlayer={handleMovePlayer}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      <div className={styles.reserves}>
-        <label>{`Reserves: ${reserves.length}/${maxReserves}`}</label>
-        <div className={styles.items}>
-          {reserves.map((player) => (
-            <PlayerPickerItem key={player.id} player={player} handleMovePlayer={handleMovePlayer} />
-          ))}
+        <div className={styles.reserves}>
+          <label>{`Reserves: ${reserves.length}/${maxReserves}`}</label>
+          <div className={styles.items}>
+            {reserves.map((player) => (
+              <PlayerPickerItem
+                key={player.id}
+                player={player}
+                handleMovePlayer={handleMovePlayer}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      <div>
-        <ActionButton text="Save Line-Up" className={buttonTypes[0]} onClick={handleOnClick} />
-      </div>
+      </span>
+      {canSave && (
+        <span className={styles.save}>
+          <div>
+            <MdOutlineSave size={"35px"} onClick={handleOnClick} />
+            save
+          </div>
+        </span>
+      )}
     </div>
   );
 };

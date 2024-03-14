@@ -85,7 +85,5 @@
 
 .content li:hover {
   background-color: #2e323a;
-  /* color: rgb(25, 107, 5); */
-  /* filter: brightness(200%); */
   cursor: pointer;
 }

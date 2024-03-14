@@ -1,18 +1,46 @@
 .container {
-  color: white;
+  display: flex;
   width: 100%;
+  color: white;
+  gap: 10px;
 }
 
 .starters {
-  padding-block: 4px;
 }
 
 .reserves {
-  padding-block: 4px;
 }
 
 .items {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+.lineup {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+}
+
+.save {
+  margin: auto;
+  border: 1px solid #2e323a;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.save div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 50px;
+}
+
+.save:hover {
+  filter: brightness(200%);
+  transition-duration: 400ms;
 }

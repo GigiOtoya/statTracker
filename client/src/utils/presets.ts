@@ -19,3 +19,5 @@ export const messages: { [k: string]: InfoBoxMessage } = {
     body: "Create a new player to add to the chosen squad.",
   },
 };
+
+export const storageKeys = ["selectedSquad", "selectedFormation"];

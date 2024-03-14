@@ -7,6 +7,7 @@ import { FiLogOut } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import { BiSolidUserDetail } from "react-icons/bi";
 import styles from "./UserOptions.module.css";
+import { onSignOut } from "../../utils/utils";
 
 export const UserOptions = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,7 +57,7 @@ export const UserOptions = () => {
             <span>Profile</span>
           </div>
           <div className={styles.row}>
-            <SignOutButton>
+            <SignOutButton signOutCallback={onSignOut}>
               <Link to="/">
                 <span>
                   <span>

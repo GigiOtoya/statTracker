@@ -11,7 +11,8 @@ export const getSquad = (id: number): Promise<Squad> => {
 };
 
 export const getSquadList = () => {
-  return apiClient.get("/squads/identifiers");
+  return apiClient.get("/squads/all");
+  // return apiClient.get("/squads/identifiers");
 };
 
 export const getSquadNames = (): Promise<AxiosResponse<string[]>> => {

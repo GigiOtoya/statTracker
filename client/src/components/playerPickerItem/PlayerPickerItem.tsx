@@ -16,7 +16,7 @@ export const PlayerPickerItem = ({ player, handleMovePlayer }: PlayerPickerItemP
       <div className={styles.item} onClick={handleOnClick}>
         {player.number}
       </div>
-      <div>{player.position}</div>
+      <div className={styles.label}>{player.position}</div>
     </div>
   );
 };

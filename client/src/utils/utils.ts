@@ -1,10 +1,27 @@
 import { formations, Formations, Formation } from "../types/formations";
-import { Player } from "../types/teamTypes";
+import { Player, Squad } from "../types/teamTypes";
 import { Positions } from "../types/positions";
 import { cloneDeep } from "lodash";
+import { messages, storageKeys } from "./presets";
 
 export const wait = (ms: number) => {
   return new Promise((res) => setTimeout(res, ms));
+};
+
+export const getMessage = (squadlistLength: number, playerListLength: number, squad?: Squad) => {
+  if (squadlistLength > 0 && !squad) {
+    return messages.squadUnselected;
+  }
+  if (squadlistLength === 0) {
+    return messages.squadListEmpty;
+  }
+  if (playerListLength === 0) {
+    return messages.playerListEmpty;
+  }
+};
+
+export const onSignOut = () => {
+  storageKeys.forEach((k) => localStorage.removeItem(k));
 };
 
 export const alternativePosition: Record<string, Positions[]> = {
