@@ -18,6 +18,10 @@ export const messages: { [k: string]: InfoBoxMessage } = {
     title: "Player list is empty.",
     body: "Create a new player to add to the chosen squad.",
   },
+  serverError: {
+    title: "Server Error",
+    body: "Couldn't retrieve squad data.",
+  },
 };
 
 export const storageKeys = ["selectedSquad", "selectedFormation"];

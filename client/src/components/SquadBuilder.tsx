@@ -17,6 +17,7 @@ import { DialogModal } from "./modals/DialogModal";
 import { Message } from "./message/Message";
 import { getMessage } from "../utils/utils";
 import { useAuthenticatedApiClient } from "../hooks/useAuthenticatedApiClient";
+import { messages } from "../utils/presets";
 
 export const SquadBuilder = () => {
   useAuthenticatedApiClient();
@@ -25,38 +26,74 @@ export const SquadBuilder = () => {
   const [selectedSquad, setSelectedSquad] = useState<Squad>();
   const [players, setPlayers] = useState<Player[]>([]);
   const [modal, setModal] = useState<ReactNode>();
-  const message = getMessage(squadList.length, players.length, selectedSquad);
+  const [message, setMessage] = useState(
+    getMessage(squadList.length, players.length, selectedSquad)
+  );
 
   useEffect(() => {
-    getSquadList()
-      .then((res) => {
-        setSquadList(res.data);
-      })
-      .then(() => {
+    const fetchSquad = async () => {
+      try {
+        const squads = await getSquadList();
+        setSquadList(squads.data);
+
         const storedSquad = localStorage.getItem("selectedSquad");
         if (storedSquad) {
-          const squad: Squad = JSON.parse(storedSquad);
-          setSelectedSquad(squad);
+          setSelectedSquad(JSON.parse(storedSquad));
         }
-      })
-      .catch((err) => {});
+      } catch (e) {
+        setMessage(messages.serverError);
+        console.log(e);
+      }
+    };
+
+    fetchSquad();
+
+    // getSquadList()
+    //   .then((res) => {
+    //     setSquadList(res.data);
+    //   })
+    //   .then(() => {
+    //     const storedSquad = localStorage.getItem("selectedSquad");
+    //     if (storedSquad) {
+    //       const squad: Squad = JSON.parse(storedSquad);
+    //       setSelectedSquad(squad);
+    //     }
+    //   })
+    //   .catch((err) => {});
   }, []);
 
   useEffect(() => {
-    if (selectedSquad) {
-      localStorage.setItem("selectedSquad", JSON.stringify(selectedSquad));
+    const fetchPlayers = async () => {
+      try {
+        if (selectedSquad) {
+          localStorage.setItem("selectedSquad", JSON.stringify(selectedSquad));
+          const squadPlayers = await getSquadPlayers(selectedSquad.id);
+          setPlayers(squadPlayers.data);
+        } else {
+          setPlayers([]);
+        }
+      } catch (e) {
+        setMessage(messages.serverError);
+        console.log(e);
+      }
+    };
 
-      getSquadPlayers(selectedSquad.id)
-        .then((res) => {
-          const players: Player[] = res.data;
-          setPlayers(players);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setPlayers([]);
-    }
+    fetchPlayers();
+
+    // if (selectedSquad) {
+    //   localStorage.setItem("selectedSquad", JSON.stringify(selectedSquad));
+
+    //   getSquadPlayers(selectedSquad.id)
+    //     .then((res) => {
+    //       const players: Player[] = res.data;
+    //       setPlayers(players);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // } else {
+    //   setPlayers([]);
+    // }
   }, [selectedSquad]);
 
   const updateSquadName = (name: string) => {

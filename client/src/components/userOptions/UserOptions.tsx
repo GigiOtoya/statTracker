@@ -54,7 +54,10 @@ export const UserOptions = () => {
             </span>
           </div>
           <div className={styles.row}>
-            <span>Profile</span>
+            <span>
+              {" "}
+              <Link to={"/Profile"}> Profile </Link>{" "}
+            </span>
           </div>
           <div className={styles.row}>
             <SignOutButton signOutCallback={onSignOut}>

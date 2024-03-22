@@ -18,11 +18,7 @@ export const GetStarted = () => {
           </div>
         </div>
       </>
-      <>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, quibusdam expedita fuga
-        quis libero dolor, maiores autem corporis possimus nostrum perspiciatis velit maxime iusto
-        quidem sunt fugit quam cupiditate delectus.
-      </>
+      <></>
     </SplitScreen>
   );
 };
