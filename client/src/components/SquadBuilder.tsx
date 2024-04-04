@@ -47,19 +47,6 @@ export const SquadBuilder = () => {
     };
 
     fetchSquad();
-
-    // getSquadList()
-    //   .then((res) => {
-    //     setSquadList(res.data);
-    //   })
-    //   .then(() => {
-    //     const storedSquad = localStorage.getItem("selectedSquad");
-    //     if (storedSquad) {
-    //       const squad: Squad = JSON.parse(storedSquad);
-    //       setSelectedSquad(squad);
-    //     }
-    //   })
-    //   .catch((err) => {});
   }, []);
 
   useEffect(() => {
@@ -79,21 +66,6 @@ export const SquadBuilder = () => {
     };
 
     fetchPlayers();
-
-    // if (selectedSquad) {
-    //   localStorage.setItem("selectedSquad", JSON.stringify(selectedSquad));
-
-    //   getSquadPlayers(selectedSquad.id)
-    //     .then((res) => {
-    //       const players: Player[] = res.data;
-    //       setPlayers(players);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // } else {
-    //   setPlayers([]);
-    // }
   }, [selectedSquad]);
 
   const updateSquadName = (name: string) => {
