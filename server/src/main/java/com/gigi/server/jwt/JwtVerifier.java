@@ -7,15 +7,14 @@ import org.springframework.stereotype.Component;
 
 import java.security.PublicKey;
 
-@Component
 public class JwtVerifier {
 
-    @Value("${clerk.pem-public-key}")
-    private String pemPublicKey;
+    private final String pemPublicKey;
 
     private final PublicKeyFactory publicKeyFactory;
 
-    public JwtVerifier(PublicKeyFactory publicKeyFactory) {
+    public JwtVerifier(String pemPublicKey, PublicKeyFactory publicKeyFactory) {
+        this.pemPublicKey = pemPublicKey;
         this.publicKeyFactory = publicKeyFactory;
     }
 

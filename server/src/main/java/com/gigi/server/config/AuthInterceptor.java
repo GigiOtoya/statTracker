@@ -18,7 +18,6 @@ import java.util.Map;
 public class AuthInterceptor implements HandlerInterceptor {
 
     private final JwtDecoder jwtDecoder;
-
     @Autowired
     public AuthInterceptor(JwtDecoder jwtDecoder) {
         this.jwtDecoder = jwtDecoder;

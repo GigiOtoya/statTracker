@@ -10,7 +10,6 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.springframework.stereotype.Component;
 
-@Component
 public class PublicKeyFactory {
 
     public PublicKey createPublicKey(String pemKey) throws Exception {
