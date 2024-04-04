@@ -17,15 +17,7 @@ import java.util.Map;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
-//    private final JwtVerifier jwtVerifier;
-
     private final JwtDecoder jwtDecoder;
-
-//    @Autowired
-//    public AuthInterceptor(JwtVerifier jwtVerifier, JwtDecoder jwtDecoder) {
-//        this.jwtVerifier = jwtVerifier;
-//        this.jwtDecoder = jwtDecoder;
-//    }
 
     @Autowired
     public AuthInterceptor(JwtDecoder jwtDecoder) {
@@ -57,7 +49,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         String sessionToken = authorizationHeader.substring(7);
-        System.out.println(sessionToken);
 
         Jwt jwt = jwtDecoder.decode(sessionToken);
         String userId = jwt.getSubject();
@@ -69,17 +60,6 @@ public class AuthInterceptor implements HandlerInterceptor {
             System.out.println("Request Method: " + request.getMethod());
             System.out.println("User: " + userId);
         }
-//        Claims payload = jwtVerifier.getPayload(sessionToken);
-
-//        if (payload != null) {
-//            String userId = payload.getSubject();
-//
-//            request.setAttribute("userId", userId);
-//
-//            System.out.println("Request URI: " + request.getRequestURI());
-//            System.out.println("Request Method: " + request.getMethod());
-//            System.out.println("User: " + userId);
-//        }
 
         return true;
     }
