@@ -58,19 +58,6 @@ public class SquadController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-//    @GetMapping(path = "name/{name}")
-//    public ResponseEntity<Squad> getSquadByName(
-//            @PathVariable String name,
-//            HttpServletRequest request
-//    ) {
-//        String userId = (String) request.getAttribute("userId");
-//
-//        Squad squadWithPlayers = squadService.getSquadByName(name, userId);
-//        return squadWithPlayers != null
-//                ? new ResponseEntity<>(squadWithPlayers, HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-
     @PostMapping
     public ResponseEntity<String> createNewSquad(
             @Valid @RequestBody SquadCreateDTO squadCreateDTO,

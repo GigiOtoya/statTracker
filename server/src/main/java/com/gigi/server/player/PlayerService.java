@@ -103,7 +103,7 @@ public class PlayerService {
 
         Optional<Squad> squadOptional = squadRepository.findSquadByIdAndUser_UserId(squadId, userId);
         if (squadOptional.isEmpty()) {
-            throw new IllegalArgumentException("Squad not found");
+            throw new EntityNotFoundException("Squad not found");
         }
 
         Optional<Player> playerOptional = playerRepository.findPlayerOfUserBySquadIdAndNumber(
