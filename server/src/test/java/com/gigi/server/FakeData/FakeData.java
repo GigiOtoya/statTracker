@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 @Component
-@Profile("dev")
+@Profile("local")
 public class FakeData implements CommandLineRunner {
 
     private final UserRepository userRepository;
