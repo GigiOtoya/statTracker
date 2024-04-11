@@ -9,15 +9,26 @@ export const wait = (ms: number) => {
 };
 
 export const getMessage = (squadlistLength: number, playerListLength: number, squad?: Squad) => {
-  if (squadlistLength > 0 && !squad) {
-    return messages.squadUnselected;
-  }
   if (squadlistLength === 0) {
     return messages.squadListEmpty;
+  }
+  if (!squad) {
+    return messages.squadUnselected;
   }
   if (playerListLength === 0) {
     return messages.playerListEmpty;
   }
+
+  // if (squadlistLength > 0 && !squad) {
+  //   return messages.squadUnselected;
+  // }
+  // if (squadlistLength === 0) {
+  //   return messages.squadListEmpty;
+  // }
+  // if (playerListLength === 0) {
+  //   return messages.playerListEmpty;
+  // }
+  return;
 };
 
 export const onSignOut = () => {

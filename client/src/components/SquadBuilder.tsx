@@ -1,5 +1,5 @@
 import { Player, MutablePlayerProperties, Squad } from "../types/teamTypes";
-import { buttonTypes } from "../types/utilityTypes";
+import { InfoBoxMessage, buttonTypes } from "../types/utilityTypes";
 import { DropDown } from "./dropdown/DropDown";
 import { Table } from "./table/Table";
 import { SplitScreen } from "../Layouts/SplitScreen";
@@ -26,9 +26,7 @@ export const SquadBuilder = () => {
   const [selectedSquad, setSelectedSquad] = useState<Squad>();
   const [players, setPlayers] = useState<Player[]>([]);
   const [modal, setModal] = useState<ReactNode>();
-  const [message, setMessage] = useState(
-    getMessage(squadList.length, players.length, selectedSquad)
-  );
+  const [message, setMessage] = useState<InfoBoxMessage | null>(null);
 
   useEffect(() => {
     const fetchSquad = async () => {
@@ -40,9 +38,9 @@ export const SquadBuilder = () => {
         if (storedSquad) {
           setSelectedSquad(JSON.parse(storedSquad));
         }
+        setMessage(null);
       } catch (e) {
         setMessage(messages.serverError);
-        console.log(e);
       }
     };
 
@@ -61,7 +59,6 @@ export const SquadBuilder = () => {
         }
       } catch (e) {
         setMessage(messages.serverError);
-        console.log(e);
       }
     };
 
@@ -149,7 +146,16 @@ export const SquadBuilder = () => {
         </DropDown>
 
         <Table data={players} updateData={updateSquadPlayers} selectedSquad={selectedSquad} />
-        {message && <Message message={message} />}
+
+        {message ? (
+          <Message message={message} />
+        ) : squadList.length === 0 ? (
+          <Message message={messages.squadListEmpty} />
+        ) : !selectedSquad ? (
+          <Message message={messages.squadUnselected} />
+        ) : players.length === 0 ? (
+          <Message message={messages.playerListEmpty} />
+        ) : null}
       </>
       <>
         <RightPane

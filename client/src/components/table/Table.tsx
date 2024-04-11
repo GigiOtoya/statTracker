@@ -147,12 +147,9 @@ export const Table = ({ data, selectedSquad, updateData }: TableProps) => {
 
   const toggleModal = () => {
     setShowModal(!showModal);
-    console.log(selectedPlayer);
   };
 
-  const handleRowClick = (player: Player) => {
-    console.log("row clicked test...");
-  };
+  const handleRowClick = (player: Player) => {};
 
   const handleOnClickNew = () => {
     setAction("NEW");
